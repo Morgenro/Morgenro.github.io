@@ -5,6 +5,28 @@
   padding: 2rem 1rem;
 }
 
+/* 新增布局修复样式 */
+.layout {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px; /* 添加内容与侧边栏间距 */
+}
+
+#page {
+  flex-grow: 1;
+  min-width: 0; /* 防止内容溢出 */
+}
+
+#aside-content {
+  width: 300px;
+  flex-shrink: 0; /* 防止侧边栏被压缩 */
+}
+
+.sticky_layout {
+  position: sticky;
+  top: 20px;
+}
+
 /* 小说推荐样式 */
 .novel-grid {
   display: grid;
@@ -19,6 +41,9 @@
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .novel-card:hover {
@@ -34,6 +59,9 @@
 
 .card-content {
   padding: 1.5rem;
+  flex-grow: 1; /* 内容区域填满剩余空间 */
+  display: flex;
+  flex-direction: column;
 }
 
 .card-title {
@@ -48,6 +76,8 @@
 
 .novel-rating {
   margin: 1rem 0;
+  display: flex;
+  gap: 3px; /* 星星间距 */
 }
 
 .star {
@@ -62,7 +92,8 @@
 .card-description {
   color: #555;
   line-height: 1.6;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  flex-grow: 1; /* 描述填满剩余空间 */
 }
 
 .btn {
@@ -73,6 +104,7 @@
   border-radius: 4px;
   text-decoration: none;
   transition: background 0.3s;
+  margin-top: auto; /* 按钮始终在底部 */
 }
 
 .btn:hover {
@@ -128,8 +160,22 @@
 }
 
 /* 响应式调整 */
+@media (max-width: 992px) {
+  .layout {
+    flex-direction: column;
+  }
+  
+  #aside-content {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .novel-grid, .photo-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .life-section {
+    padding: 1rem;
   }
 }
