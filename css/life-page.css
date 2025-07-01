@@ -5,26 +5,37 @@
   padding: 2rem 1rem;
 }
 
-/* 新增布局修复样式 */
+/* 主要布局修复 */
+#body-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
 .layout {
   display: flex;
   justify-content: space-between;
-  gap: 40px; /* 添加内容与侧边栏间距 */
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
-#page {
+#content-inner {
   flex-grow: 1;
-  min-width: 0; /* 防止内容溢出 */
+  min-width: 0;
 }
 
 #aside-content {
   width: 300px;
-  flex-shrink: 0; /* 防止侧边栏被压缩 */
+  flex-shrink: 0;
 }
 
-.sticky_layout {
-  position: sticky;
-  top: 20px;
+/* 解决小说推荐页面内部的结构问题 */
+#content-inner > #page {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+#content-inner > #aside-content {
+  order: 2; /* 在内容之后渲染 */
 }
 
 /* 小说推荐样式 */
@@ -59,7 +70,7 @@
 
 .card-content {
   padding: 1.5rem;
-  flex-grow: 1; /* 内容区域填满剩余空间 */
+  flex-grow: 1; 
   display: flex;
   flex-direction: column;
 }
@@ -77,7 +88,7 @@
 .novel-rating {
   margin: 1rem 0;
   display: flex;
-  gap: 3px; /* 星星间距 */
+  gap: 3px;
 }
 
 .star {
@@ -93,7 +104,7 @@
   color: #555;
   line-height: 1.6;
   margin-bottom: 1.5rem;
-  flex-grow: 1; /* 描述填满剩余空间 */
+  flex-grow: 1;
 }
 
 .btn {
@@ -104,7 +115,7 @@
   border-radius: 4px;
   text-decoration: none;
   transition: background 0.3s;
-  margin-top: auto; /* 按钮始终在底部 */
+  margin-top: auto;
 }
 
 .btn:hover {
@@ -167,6 +178,11 @@
   
   #aside-content {
     width: 100%;
+  }
+  
+  /* 小说推荐页面的响应式调整 */
+  #content-inner > #aside-content {
+    order: 0;
   }
 }
 
