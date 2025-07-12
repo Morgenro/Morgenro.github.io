@@ -1,0 +1,211 @@
+/* 自定义CSS样式 - 为Butterfly主题添加更华丽的效果 */
+
+/* 全局背景 */
+:root {
+  --global-bg: url('/img/AiHaibara1.jpg');
+}
+
+body {
+  background-image: var(--global-bg);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 1s ease-in-out;
+  position: relative;
+}
+
+/* 添加背景遮罩效果 */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: -1;
+}
+
+/* 毛玻璃效果 */
+#recent-posts > .recent-post-item, 
+.layout > div:first-child:not(.recent-posts),
+.layout > .aside-content,
+.card-widget,
+#post,
+#page,
+#archive,
+#tag,
+#category {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+/* 卡片悬停效果 */
+#recent-posts > .recent-post-item:hover,
+.card-widget:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* 导航栏美化 */
+#nav {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 首页文章卡片 */
+#recent-posts > .recent-post-item .post_cover {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#recent-posts > .recent-post-item .post_cover img {
+  transition: transform 0.6s ease;
+}
+
+#recent-posts > .recent-post-item .post_cover:hover img {
+  transform: scale(1.1);
+}
+
+/* 文章内容美化 */
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  position: relative;
+  padding-left: 20px;
+  border-left: 4px solid #49b1f5;
+  color: #344c67;
+}
+
+.post-content p {
+  line-height: 1.8;
+}
+
+/* 小说推荐页面美化 */
+.novel-card {
+  display: flex;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.novel-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.novel-cover {
+  width: 120px;
+  height: 180px;
+  margin-right: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.novel-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.novel-cover:hover img {
+  transform: scale(1.05);
+}
+
+.novel-info {
+  flex: 1;
+}
+
+.novel-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #344c67;
+}
+
+.novel-author {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.novel-rating {
+  color: #ffa502;
+  margin-bottom: 10px;
+}
+
+.novel-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* 页脚美化 */
+#footer {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(73, 177, 245, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(73, 177, 245, 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(73, 177, 245, 0.8);
+}
+
+/* 动画效果 */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.card-info-avatar {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* 鼠标指针特效 */
+body {
+  cursor: url('/img/default.cur'), auto;
+}
+
+a, button, img {
+  cursor: url('/img/pointer.cur'), auto;
+}
