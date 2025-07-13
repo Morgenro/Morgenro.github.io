@@ -1,0 +1,108 @@
+/* 日记页面样式 */
+
+/* 日记时间线容器 */
+.diary-timeline {
+  position: relative;
+  margin: 30px 0;
+  padding-left: 100px; /* 增加左侧padding，为日期留出空间 */
+}
+
+/* 时间线垂直线 */
+.diary-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 80px; /* 将时间线移到日期右侧 */
+  height: 100%;
+  width: 4px;
+  background: #49b1f5;
+  border-radius: 2px;
+  z-index: 1;
+}
+
+/* 日记条目 */
+.diary-item {
+  position: relative;
+  margin-bottom: 50px; /* 增加底部间距 */
+  padding: 20px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.diary-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* 添加连接线 */
+.diary-item::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: -24px;
+  width: 24px;
+  height: 4px;
+  background: #49b1f5;
+  z-index: 0;
+}
+
+/* 日记日期 */
+.diary-date {
+  position: absolute;
+  left: -100px; /* 将日期放在更左侧 */
+  top: 12px; /* 微调垂直位置 */
+  padding: 5px 10px;
+  background: #49b1f5;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  width: 80px; /* 固定宽度 */
+  text-align: center; /* 文本居中 */
+}
+
+/* 日记标题 */
+.diary-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #344c67;
+}
+
+/* 日记内容 */
+.diary-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* 适配移动设备 */
+@media screen and (max-width: 768px) {
+  .diary-timeline {
+    padding-left: 0;
+  }
+  
+  .diary-timeline::before {
+    left: 20px;
+  }
+  
+  .diary-item {
+    padding-left: 40px;
+  }
+  
+  .diary-date {
+    position: absolute;
+    left: -10px;
+    top: 12px;
+    width: auto;
+    z-index: 2;
+  }
+  
+  .diary-item::before {
+    width: 14px;
+    left: -14px;
+  }
+}
