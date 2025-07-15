@@ -106,3 +106,12 @@
     left: -14px;
   }
 }
+/* 隐藏评论区分割线 */
+.custom-hr {
+  display: none !important;
+}
+
+/* 隐藏评论标题（图标+文字） */
+.comment-headline {
+  display: none !important;
+}
