@@ -1,0 +1,556 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Markdown语法 | Morgenro's Blog</title><meta name="author" content="Morgenro"><meta name="copyright" content="Morgenro"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="alsoB站上刷的到语法表，感觉比我之前的好多了，copy过来）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markdown语法">
+<meta property="og:url" content="http://example.com/2025/08/02/markdown%E8%AF%AD%E6%B3%95/index.html">
+<meta property="og:site_name" content="Morgenro&#39;s Blog">
+<meta property="og:description" content="alsoB站上刷的到语法表，感觉比我之前的好多了，copy过来）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/AiHaibara1.jpg">
+<meta property="article:published_time" content="2025-08-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-02T07:38:29.952Z">
+<meta property="article:author" content="Morgenro">
+<meta property="article:tag" content="Markdown语法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/AiHaibara1.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Markdown语法",
+  "url": "http://example.com/2025/08/02/markdown%E8%AF%AD%E6%B3%95/",
+  "image": "http://example.com/img/AiHaibara1.jpg",
+  "datePublished": "2025-08-01T16:00:00.000Z",
+  "dateModified": "2025-08-02T07:38:29.952Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Morgenro",
+      "url": "http://example.com/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/AiHaibara1.jpg"><link rel="canonical" href="http://example.com/2025/08/02/markdown%E8%AF%AD%E6%B3%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Markdown语法',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/life-pages.css?1"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/AiHaibara1.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><i class="fa-fw fa fa-folder-open"></i><span> 日记</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/novel/"><i class="fa-fw fas fa-book"></i><span> 小说推荐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/AiHaibara1.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Morgenro's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Markdown语法</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><i class="fa-fw fa fa-folder-open"></i><span> 日记</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/novel/"><i class="fa-fw fas fa-book"></i><span> 小说推荐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Markdown语法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-01T16:00:00.000Z" title="发表于 2025-08-02 00:00:00">2025-08-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-02T07:38:29.952Z" title="更新于 2025-08-02 15:38:29">2025-08-02</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p><strong>语法速查表</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">功能 (Feature)</th>
+<th align="left">Markdown 语法 (Syntax)</th>
+<th align="left">效果预览 (Result)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">一级标题</td>
+<td align="left"><code># 标题内容</code></td>
+<td align="left">最大的标题</td>
+</tr>
+<tr>
+<td align="left">二级标题</td>
+<td align="left"><code>## 标题内容</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">三级标题</td>
+<td align="left"><code>### 标题内容</code></td>
+<td align="left">(依此类推，可到六级)</td>
+</tr>
+<tr>
+<td align="left">—</td>
+<td align="left">—</td>
+<td align="left">—</td>
+</tr>
+<tr>
+<td align="left"><strong>加粗</strong></td>
+<td align="left"><code>**需要加粗的文字**</code></td>
+<td align="left"><strong>需要加粗的文字</strong></td>
+</tr>
+<tr>
+<td align="left"><em>斜体</em></td>
+<td align="left"><code>*需要倾斜的文字*</code></td>
+<td align="left"><em>需要倾斜的文字</em></td>
+</tr>
+<tr>
+<td align="left"><em><strong>加粗并斜体</strong></em></td>
+<td align="left"><code>***又粗又斜的文字***</code></td>
+<td align="left"><em><strong>又粗又斜的文字</strong></em></td>
+</tr>
+<tr>
+<td align="left"><del>删除线</del></td>
+<td align="left"><code>~~被删除的文字~~</code></td>
+<td align="left"><del>被删除的文字</del></td>
+</tr>
+<tr>
+<td align="left">—</td>
+<td align="left">—</td>
+<td align="left">—</td>
+</tr>
+<tr>
+<td align="left">无序列表</td>
+<td align="left"><code>- 列表项</code> 或 <code>* 列表项</code></td>
+<td align="left">• 列表项</td>
+</tr>
+<tr>
+<td align="left">有序列表</td>
+<td align="left"><code>1. 列表项一</code><br><code>2. 列表项二</code></td>
+<td align="left">1. 列表项一<br>2. 列表项二</td>
+</tr>
+<tr>
+<td align="left">任务列表（待办）</td>
+<td align="left"><code>- [ ] 未完成的任务</code><br><code>- [x] 已完成的任务</code></td>
+<td align="left">☐ 未完成的任务<br>☑ 已完成的任务</td>
+</tr>
+<tr>
+<td align="left">—</td>
+<td align="left">—</td>
+<td align="left">—</td>
+</tr>
+<tr>
+<td align="left">&gt; 引用</td>
+<td align="left"><code>&gt; 这是一段引用的文字</code></td>
+<td align="left">&gt; 这是一段引用的文字</td>
+</tr>
+<tr>
+<td align="left"><code>行内代码</code></td>
+<td align="left"><code>`code`</code></td>
+<td align="left">用于突出显示单个变量或命令</td>
+</tr>
+<tr>
+<td align="left">代码块</td>
+<td align="left"><code>```python `&lt;br&gt;`print(&quot;Hello, World!&quot;)`&lt;br&gt;` ```</code></td>
+<td align="left">用于显示多行代码片段</td>
+</tr>
+<tr>
+<td align="left">—</td>
+<td align="left">—</td>
+<td align="left">—</td>
+</tr>
+<tr>
+<td align="left">链接</td>
+<td align="left"><code>[链接显示的文字](https://obsidian.md)</code></td>
+<td align="left"><a target="_blank" rel="noopener" href="https://obsidian.md/">链接显示的文字</a></td>
+</tr>
+<tr>
+<td align="left">图片</td>
+<td align="left"><code>![图片的替代文字](图片链接或路径)</code></td>
+<td align="left">(在笔记中会直接显示图片)</td>
+</tr>
+<tr>
+<td align="left">水平分割线</td>
+<td align="left"><code>---</code> 或 <code>***</code></td>
+<td align="left">一条横跨整个页面的线</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>[!note]+ 标题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">井号加空格，几个井号就是几级标题，一级标题字体最大。</span><br><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br></pre></td></tr></table></figure></blockquote>
+<h1 id="标题-1"><a href="#标题-1" class="headerlink" title="标题 1"></a>标题 1</h1><h2 id="标题-2"><a href="#标题-2" class="headerlink" title="标题 2"></a>标题 2</h2><h3 id="标题-3"><a href="#标题-3" class="headerlink" title="标题 3"></a>标题 3</h3><h4 id="标题-4"><a href="#标题-4" class="headerlink" title="标题 4"></a>标题 4</h4><h5 id="标题-5"><a href="#标题-5" class="headerlink" title="标题 5"></a>标题 5</h5><h6 id="标题-6"><a href="#标题-6" class="headerlink" title="标题 6"></a>标题 6</h6><hr>
+<blockquote>
+<p>[!note]+ 文本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">两个星号是加粗：**我是加粗字体**</span><br><span class="line">一个型号是斜体：*我是斜体*</span><br><span class="line">三个星号，或者三个下划线是粗斜体：***我是粗斜体***，___我是粗斜体___</span><br><span class="line">两个等号是高亮：==我是高亮==</span><br><span class="line">两个波浪线是删除：~~我是删除~~</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h2><p>普通文本</p>
+<p><strong>段落粗体文本</strong></p>
+<p><em>段落斜体文本</em></p>
+<p>&#x3D;&#x3D;高亮&#x3D;&#x3D;</p>
+<p><del>删除</del></p>
+<p><em><strong>粗斜体</strong></em><br><em><strong>粗斜体</strong></em><br><del>删除</del></p>
+<hr>
+<blockquote>
+<p>[!note]+ 列表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">无序列表：减号/加号/星号 + 空格，三个符号哪个都可以，但是建议用减号。 - 列表项1</span><br><span class="line">有序列表：数字+点+空格：1. 列表项</span><br><span class="line">输入完一个列表项后，打回车可以继续下一个列表项</span><br><span class="line">列表嵌套：使用tab可以让列表缩进，使用shift+tab可以取消缩进。</span><br><span class="line"></span><br><span class="line">任务列表：方括号里面一个空格或者叉，空格代表未完成，叉代表已完成。</span><br><span class="line">[x] 任务 1</span><br><span class="line">[ ] 任务 2</span><br><span class="line">Task插件可以使已完成的任务后面自动显示完成时间。</span><br><span class="line"></span><br><span class="line">&gt;任务列表并非原始的、John Gruber 定义的 Markdown 标准语法。然而，它已经成为一种被广泛接受和支持的 Markdown 扩展语法，许多现代的 Markdown 编辑器和笔记应用也都采纳了这种任务列表语法，因为它非常直观和实用。</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p><strong>无序列表</strong></p>
+<ul>
+<li>列表项 1</li>
+<li>列表项 2<ul>
+<li>列表项 2.1</li>
+<li>列表项 2.2</li>
+</ul>
+</li>
+<li>列表项 3</li>
+</ul>
+<p><strong>有序列表</strong></p>
+<ol>
+<li>列表项 a</li>
+<li>列表项 b<ol>
+<li>列表项 b1</li>
+<li>列表项 b2</li>
+</ol>
+</li>
+<li>列表项 c</li>
+</ol>
+<p><strong>任务列表</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> 任务 1</li>
+<li><input disabled="" type="checkbox"> 任务 2<ul>
+<li><input disabled="" type="checkbox"> 嵌套任务 2.1</li>
+<li><input disabled="" type="checkbox"> 嵌套任务 2.2</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> 任务 3</li>
+</ul>
+<hr>
+<h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><blockquote>
+<p>[!note]+ 段落</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">引用：大于号+空格：&gt; 我是引用</span><br><span class="line">嵌套引用：多个大于号，每多一个大于号，代表深一层嵌套</span><br><span class="line">分割线：三个减号然后回车：---</span><br><span class="line">强制换行 (Soft Break / Line Break)：在同一段落内强制开始一个新行，而不是开始一个新段落。使用方法：在一行的末尾输入两个或更多的空格，然后按回车键。</span><br><span class="line">备选方法：(如果 Markdown 解析器支持 HTML)：直接使用 HTML 的 &lt;br&gt; 标签。</span><br><span class="line"></span><br></pre></td></tr></table></figure></blockquote>
+<p>引用语法：</p>
+<blockquote>
+<p>引用了一段名人名言</p>
+<blockquote>
+<p>嵌套引用</p>
+<blockquote>
+<p>俄罗斯套娃</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>强制换行：</p>
+<pre><code>这是第一行文字（假设末尾有两个空格）   
+第二行
+</code></pre>
+<p>分割线：</p>
+<hr>
+<blockquote>
+<p>[!note]+ 链接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">[普通链接](https://www.bing.com/)</span><br><span class="line">[普通链接带标题](https://www.bing.com/ &quot;普通链接带标题&quot;)</span><br><span class="line">直接链接：&lt;https://github.com&gt;</span><br><span class="line">锚点链接：1. 在文稿起草阶段，还没确定具体网址，但可以先给出网址标题。2. 同一篇文章需要重复出现同一个网址时.</span><br><span class="line">使用方法：[网址标题][网址名]</span><br><span class="line">然后在其他地方（一般是文章最后）给出网址名的地址：[网址名]:https://www.bing.com/</span><br><span class="line">[锚点链接][anchor-id]</span><br><span class="line">[anchor-id]: http://www.this-anchor-link.com/</span><br><span class="line"></span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><a target="_blank" rel="noopener" href="https://www.bing.com/">普通链接</a></p>
+<p>直接链接：<a target="_blank" rel="noopener" href="https://github.com/">https://github.com</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.this-anchor-link.com/">锚点链接</a></p>
+<hr>
+<blockquote>
+<p>[!note]+ 脚注</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">方括号内，上箭头，外加脚注名称（一般为标号）</span><br><span class="line">本句话要加脚注[^01]</span><br><span class="line">[^01]:这是解释脚注 01的内容</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="脚注"><a href="#脚注" class="headerlink" title="脚注"></a>脚注</h2><ol>
+<li>要添加脚注的话<a href="%E8%84%9A%E6%B3%A8%E5%86%85%E5%AE%B9%E4%B8%80">^01</a></li>
+<li>第二个要添加脚注的话<a href="%E8%84%9A%E6%B3%A8%E5%86%85%E5%AE%B9%E4%BA%8C">^02</a></li>
+</ol>
+<hr>
+<blockquote>
+<p>[!note]+ 图片</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">图片语法与链接类似，只是在前面多一个感叹号!。</span><br><span class="line">示例：![替代文本](图片路径 &quot;可选的图片标题&quot;)</span><br><span class="line">替代文本：当图片无法显示时展示的文字，也有助于屏幕阅读器。</span><br><span class="line">图片路径：可以是网络图片的 URL，也可以是本地文件的相对或绝对路径。</span><br><span class="line">可选的图片标题：鼠标悬停在图片上时显示的提示文字。</span><br><span class="line"></span><br><span class="line">带链接的图片 (Clickable Images)：</span><br><span class="line">使用方法：将图片的 Markdown 语法作为链接的“链接文本”部分。</span><br><span class="line">[![替代文本](图片路径)](链接地址)</span><br><span class="line">[![可爱的猫咪](/assets/obsidian.jpg)](https://www.bing.com/)</span><br><span class="line">点击即可跳转到bing.com，哪怕图片找不到，点击依然跳转到链接。</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p><img src="https://obsidian.md/images/obsidian-logo-gradient.svg" alt="Obsidian Logo" title="Obsidian Logo"></p>
+<p><a target="_blank" rel="noopener" href="https://www.bing.com/"><img src="/assets/obsidian.jpg" alt="可爱的猫咪"></a></p>
+<hr>
+<blockquote>
+<p>[!note]+ 表格</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">表头： 用竖线 | 分隔单元格内容。</span><br><span class="line">分隔行： 用竖线 | 分隔，并使用至少三个减号 - 来创建每个单元格的分隔线。可以通过在减号前后添加冒号 : 来控制该列的对齐方式：</span><br><span class="line">左对齐 (默认)：:--- (或 :-)</span><br><span class="line">居中对齐：:---: (或 :-:)</span><br><span class="line">右对齐：---: (或 -:)</span><br><span class="line">内容行 (Content Rows): 用竖线 | 分隔单元格内容。</span><br><span class="line">最外层的竖线 | 是可选的，但为了美观和清晰，建议加上。</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><table>
+<thead>
+<tr>
+<th>名字</th>
+<th>姓氏</th>
+<th>电子邮件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>John</td>
+<td>Doe</td>
+<td><a href="mailto:&#106;&#111;&#104;&#x6e;&#x2e;&#100;&#111;&#x65;&#x40;&#x65;&#x78;&#97;&#109;&#112;&#108;&#101;&#x2e;&#99;&#111;&#109;">john.doe@example.com</a></td>
+</tr>
+<tr>
+<td>Muffin</td>
+<td>Poppies</td>
+<td><a href="mailto:&#109;&#x75;&#102;&#x66;&#x69;&#110;&#46;&#x70;&#x6f;&#x70;&#112;&#x69;&#101;&#115;&#64;&#x65;&#x78;&#97;&#x6d;&#112;&#x6c;&#x65;&#x2e;&#99;&#x6f;&#x6d;">muffin.poppies@example.com</a></td>
+</tr>
+<tr>
+<td>Jane</td>
+<td>Doe</td>
+<td><a href="mailto:&#x6a;&#97;&#x6e;&#x65;&#x2e;&#100;&#111;&#x65;&#x40;&#101;&#120;&#x61;&#109;&#112;&#108;&#101;&#x2e;&#99;&#111;&#109;">jane.doe@example.com</a></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">左对齐</th>
+<th align="center">居中对齐</th>
+<th align="right">右对齐</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">AAA</td>
+<td align="center">BBB</td>
+<td align="right">CCC</td>
+</tr>
+</tbody></table>
+<hr>
+<blockquote>
+<p>[!note]+ 代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">行内代码用一个点包裹，代码块用三个点包裹，点是键盘上数字1左边的点。</span><br><span class="line">代码块可以指定代码语言，比如python、javascript，直接加在三个点后面即可。</span><br><span class="line">对于 Markdown 中的语言标识符（例如 javascript），通常不区分大小写。这意味着 javascript、JavaScript 和 JAVASCRIPT 应该产生相同的语法高亮效果。不过，最佳实践是使用小写形式。但这也可能取决于具体的 Markdown 解析器。</span><br><span class="line"></span><br><span class="line">Mermaid代码可以生成各种图标，感兴趣的可以单独学习Mermaid语法。</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><strong>行内代码</strong><br>变量 <code>myvar</code> 被设置为值 <code>100</code>。</p>
+<p><strong>代码块</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calc</span>(<span class="params">a</span>):</span><br><span class="line">	<span class="keyword">return</span> np.sqrt(a)*<span class="number">3</span></span><br><span class="line"></span><br><span class="line">test = calc(<span class="number">12</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Mermaid代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[开始] --&gt; B(处理);</span><br><span class="line">    B --&gt; C&#123;条件?&#125;;</span><br><span class="line">    C -- 是 --&gt; D[操作1];</span><br><span class="line">    C -- 否 --&gt; E[操作2];</span><br><span class="line">    D --&gt; F[结束];</span><br><span class="line">    E --&gt; F;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Obsidian-特有或增强的Markdown-功能"><a href="#Obsidian-特有或增强的Markdown-功能" class="headerlink" title="[[Obsidian]]特有或增强的Markdown 功能"></a>[[Obsidian]]特有或增强的Markdown 功能</h1><blockquote>
+<p>[!note]+ 双链</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">1. [[笔记文件名]]：链接到仓库内的另一篇笔记。使用方法：用双层方括号 [[]] 包裹笔记的文件名 (无需 .md 后缀)。示例：[[我的待办事项]]</span><br><span class="line">2. [[笔记文件名#标题名]]：链接到另一篇笔记中的特定标题。使用方法：在文件名后加 # 和目标标题的文本。示例：[[Markdown 语法详解#10. 表格]]</span><br><span class="line">3. [[笔记文件名|自定义显示文本]]：链接到另一篇笔记，但显示自定义的链接文字。使用方法：在文件名后加 | 和希望显示的文本。示例： [[2024-05-27 Daily Note|昨天的日记]]</span><br><span class="line">4. ![[笔记文件名]]：将另一篇笔记的全部内容嵌入到当前笔记中。使用方法：与图片嵌入类似，但使用双层方括号，并以 ! 开头。示例： ![[常用代码片段]]</span><br><span class="line">5. ![[笔记文件名#标题名]]：将另一篇笔记中特定标题下的内容嵌入。使用方法：在文件名后跟特定标题。示例： ![[会议记录#行动项]]</span><br><span class="line">6. ![[笔记文件名#^块ID]]：嵌入笔记中被 \^块ID 标记的特定块（段落、列表项等）。使用方法：先在源笔记中，在你想要引用的段落或列表项的末尾添加一个块引用ID，格式为 ^yourBlockID (例如 ^task123)。然后在目标笔记中用 ![[源笔记文件名#^yourBlockID]] 来嵌入它。示例：在 &quot;任务列表.md&quot; 中： - [ ] 完成报告 ^reportTask，然后在当前笔记中嵌入： ![[任务列表#^reportTask]]</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="双链"><a href="#双链" class="headerlink" title="双链"></a>双链</h2><p>注意：这里使用反斜杠，是为了让Obsidian不把他识别为一个双链，否则Dashboard就会被认为是一个双链，从而在关系图谱中看到这个Dashboard节点。<br>内部链接: [[Dashboard]]</p>
+<hr>
+<blockquote>
+<p>[!note]+ 标签</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">以井号 # 开头，后跟标签名称。标签名不能包含空格，可以用 - 或 _ 连接多词标签 (如 #读书笔记 或 #project-alpha)。标签可以放在笔记的任意位置，包括 YAML Frontmatter 中的 tags 字段。</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><p>标签: #dashboard #notes</p>
+<hr>
+<blockquote>
+<p>[!note]+ 数学与公式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">Obsidian 内置了对 KaTeX 的支持，用于渲染 LaTeX 数学公式。</span><br><span class="line">$行内数学公式$：将公式嵌入到文本行中。</span><br><span class="line">使用方法：用一对美元符号 $ 包裹 LaTeX 公式。</span><br><span class="line">$$块级数学公式$$：将公式在单独的块中居中显示。</span><br><span class="line">使用方法：两对美元符号包裹</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="数学与公式"><a href="#数学与公式" class="headerlink" title="数学与公式"></a>数学与公式</h2><p>$$g&#x3D;g_0 \frac{R^2}{\left( R + z \right)^2} &#x3D; \frac{g_0}{\left(1 + z&#x2F;R \right)^2} $$</p>
+<p>其中,<br>$g$ &#x3D; 指定距离处的相对引力。<br>$g_0$ &#x3D; [[Surface Gravity |物体的表面引力]]。<br>$R$ &#x3D; 物体的半径。(通常是物体的赤道半径)。<br>$z$ &#x3D; 物体表面以上的距离。</p>
+<hr>
+<blockquote>
+<p>[!note]+ 引用块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">注意：所有符号都是英文输入法下的符号</span><br><span class="line">使用方法: 引用块 (&gt;) 之后紧跟 [!类型]。类型可以是 note, abstract, info, todo, tip, success, question, warning, failure, danger, bug, example, quote 等。</span><br><span class="line">可选标题**: 在 [!类型] 后可以添加自定义标题文本。</span><br><span class="line">可折叠**: 在类型后加减号 - (如 [!INFO]-) 可使标注默认折叠，加加号 + (如 [!INFO]+) 可使其默认展开 (通常默认就是展开)。</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="引用块-Callouts"><a href="#引用块-Callouts" class="headerlink" title="引用块 (Callouts)"></a>引用块 (Callouts)</h2><blockquote>
+<p>[!note]+ 笔记引用块<br>这是一个笔记引用块…</p>
+</blockquote>
+<blockquote>
+<p>[!warning]- 警示引用块<br>这是一个警示引用块…</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">该文引用于“杰森的效率工坊”；站点“jason-effi-lab.notion.site”</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Morgenro</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/08/02/markdown%E8%AF%AD%E6%B3%95/">http://example.com/2025/08/02/markdown%E8%AF%AD%E6%B3%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">Morgenro's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Markdown%E8%AF%AD%E6%B3%95/">Markdown语法</a></div><div class="post-share"><div class="social-share" data-image="/img/AiHaibara1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/07/29/%E5%B9%B3%E6%9D%BF%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="平板远程连接云服务器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">平板远程连接云服务器</div></div><div class="info-2"><div class="info-item-1">&emsp;&emsp;因为大部分时间在自习室不方便携带电脑,回到寝室玩游戏又不愿意写笔记力,所以一直在想怎么用平板写博客.由于寝室没网,所以把笔记本当作服务器指定是不行了,还是买个服务器把 云小站有个38的2h2g,说是没有买过产品的新人可以抢,我真的是新人qwq为什么我不行 服务端配置购买阿里云的68&#x2F;年的2h2g服务器对我来说够用了 首先就是配置ssh防火墙,在控制台的防火墙模板添加规则,要是想安全一点就添加公网IP&#x2F;32之后是下载一些常用的包,阿里云使用yum来安装 123sudo yum install -y curlcurl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash -sudo yum install -y nodejs 不想使用sudo影响全局环境可以使用svm管理 1234curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bashsource ~/.bashrcnvm...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/AiHaibara1.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Morgenro</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Morgenro/"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%87%E9%A2%98-1"><span class="toc-number">1.</span> <span class="toc-text">标题 1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E9%A2%98-2"><span class="toc-number">1.1.</span> <span class="toc-text">标题 2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E9%A2%98-3"><span class="toc-number">1.1.1.</span> <span class="toc-text">标题 3</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E9%A2%98-4"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">标题 4</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%87%E9%A2%98-5"><span class="toc-number">1.1.1.1.1.</span> <span class="toc-text">标题 5</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A0%87%E9%A2%98-6"><span class="toc-number">1.1.1.1.1.1.</span> <span class="toc-text">标题 6</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC"><span class="toc-number">1.2.</span> <span class="toc-text">文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E8%A1%A8"><span class="toc-number">1.3.</span> <span class="toc-text">列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AE%B5%E8%90%BD"><span class="toc-number">1.4.</span> <span class="toc-text">段落</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5"><span class="toc-number">1.5.</span> <span class="toc-text">链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%9A%E6%B3%A8"><span class="toc-number">1.6.</span> <span class="toc-text">脚注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%89%87"><span class="toc-number">1.7.</span> <span class="toc-text">图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC"><span class="toc-number">1.8.</span> <span class="toc-text">表格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">1.9.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Obsidian-%E7%89%B9%E6%9C%89%E6%88%96%E5%A2%9E%E5%BC%BA%E7%9A%84Markdown-%E5%8A%9F%E8%83%BD"><span class="toc-number">2.</span> <span class="toc-text">[[Obsidian]]特有或增强的Markdown 功能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E9%93%BE"><span class="toc-number">2.1.</span> <span class="toc-text">双链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE"><span class="toc-number">2.2.</span> <span class="toc-text">标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E4%B8%8E%E5%85%AC%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">数学与公式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E5%9D%97-Callouts"><span class="toc-number">2.4.</span> <span class="toc-text">引用块 (Callouts)</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/02/markdown%E8%AF%AD%E6%B3%95/" title="Markdown语法">Markdown语法</a><time datetime="2025-08-01T16:00:00.000Z" title="发表于 2025-08-02 00:00:00">2025-08-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/29/%E5%B9%B3%E6%9D%BF%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="平板远程连接云服务器">平板远程连接云服务器</a><time datetime="2025-07-29T11:54:07.000Z" title="发表于 2025-07-29 19:54:07">2025-07-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/25/7%E6%9C%88%E9%AB%98%E4%B8%AD%E6%9C%8B%E5%8F%8B%E6%9D%A5%E8%AE%BF%E8%AE%B0/" title="7月高中朋友来访记">7月高中朋友来访记</a><time datetime="2025-07-25T13:42:09.000Z" title="发表于 2025-07-25 21:42:09">2025-07-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/16/MoeChat/" title="MoeChat">MoeChat</a><time datetime="2025-07-16T14:40:15.000Z" title="发表于 2025-07-16 22:40:15">2025-07-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/15/%E4%B8%BA%E4%BD%A0%E7%9A%84hexo%E6%B7%BB%E5%8A%A0%E4%B8%8D%E6%AD%A2%E4%B8%80%E4%B8%AA%E8%AF%84%E8%AE%BA%E5%8C%BA/" title="为你的hexo添加不止一个评论区">为你的hexo添加不止一个评论区</a><time datetime="2025-07-15T14:03:04.000Z" title="发表于 2025-07-15 22:03:04">2025-07-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Morgenro</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'all',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'Morgenro/Morgenro.github.io',
+      'data-repo-id': 'R_kgDOOnQMCg',
+      'data-category-id': 'DIC_kwDOOnQMCs4Cs90C',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script src="/js/life-pages.js?1"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
