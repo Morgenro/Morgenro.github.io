@@ -1,0 +1,289 @@
+/* Additional Cyberpunk 2077 Enhancements */
+
+/* Neon text glow animation */
+@keyframes neon-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 7px #FCE500,
+      0 0 10px #FCE500,
+      0 0 21px #FCE500,
+      0 0 42px #00F0FF,
+      0 0 82px #00F0FF;
+  }
+  50% {
+    text-shadow:
+      0 0 4px #FCE500,
+      0 0 7px #FCE500,
+      0 0 15px #FCE500,
+      0 0 30px #00F0FF,
+      0 0 60px #00F0FF;
+  }
+}
+
+/* Hologram flicker */
+@keyframes hologram-flicker {
+  0%, 100% { opacity: 1; }
+  10% { opacity: 0.8; }
+  20% { opacity: 1; }
+  30% { opacity: 0.9; }
+  40% { opacity: 1; }
+  50% { opacity: 0.85; }
+  60% { opacity: 1; }
+  70% { opacity: 0.95; }
+  80% { opacity: 1; }
+  90% { opacity: 0.9; }
+}
+
+/* Apply to headers */
+h1, h2, h3, .post-title {
+  animation: neon-pulse 2s ease-in-out infinite !important;
+}
+
+/* Card hover effect enhancement */
+.card-widget:hover {
+  animation: hologram-flicker 0.3s ease-in-out;
+}
+
+/* Menu items enhancement */
+#nav .menus_items .menus_item {
+  position: relative;
+}
+
+#nav .menus_items .menus_item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #FCE500, #00F0FF);
+  transition: width 0.3s ease;
+}
+
+#nav .menus_items .menus_item:hover::after {
+  width: 100%;
+}
+
+/* Cyber border effect */
+.cyber-border {
+  position: relative;
+  border: 2px solid #FCE500;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 20px) 0,
+    100% 20px,
+    100% 100%,
+    20px 100%,
+    0 calc(100% - 20px)
+  );
+}
+
+/* Loading bar animation */
+@keyframes loading-bar {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.loading-bar {
+  height: 3px;
+  background: linear-gradient(90deg, #FCE500, #00F0FF, #FF003C);
+  animation: loading-bar 2s ease-in-out infinite;
+}
+
+/* Terminal cursor blink */
+@keyframes cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 20px;
+  background: #FCE500;
+  animation: cursor-blink 1s infinite;
+  margin-left: 5px;
+}
+
+/* Hexagon shapes for futuristic look */
+.hexagon {
+  position: relative;
+  width: 100px;
+  height: 57.74px;
+  background: linear-gradient(135deg, #FCE500, #00F0FF);
+  margin: 28.87px 0;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* Data stream effect */
+@keyframes data-stream {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.data-stream {
+  position: fixed;
+  top: 0;
+  width: 2px;
+  height: 100px;
+  background: linear-gradient(180deg, transparent, #00F0FF, transparent);
+  animation: data-stream 3s linear infinite;
+}
+
+/* Glitch text effect */
+@keyframes glitch-skew {
+  0% { transform: skew(0deg); }
+  10% { transform: skew(-2deg); }
+  20% { transform: skew(2deg); }
+  30% { transform: skew(0deg); }
+  100% { transform: skew(0deg); }
+}
+
+.glitch-text {
+  position: relative;
+  animation: glitch-skew 1s infinite;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -2px 0 #FF003C;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -2px 0 #00F0FF;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(10px, 9999px, 90px, 0); }
+  20% { clip: rect(50px, 9999px, 70px, 0); }
+  40% { clip: rect(20px, 9999px, 80px, 0); }
+  60% { clip: rect(60px, 9999px, 30px, 0); }
+  80% { clip: rect(40px, 9999px, 50px, 0); }
+  100% { clip: rect(70px, 9999px, 20px, 0); }
+}
+
+@keyframes glitch-anim2 {
+  0% { clip: rect(30px, 9999px, 60px, 0); }
+  20% { clip: rect(70px, 9999px, 40px, 0); }
+  40% { clip: rect(50px, 9999px, 20px, 0); }
+  60% { clip: rect(10px, 9999px, 80px, 0); }
+  80% { clip: rect(90px, 9999px, 30px, 0); }
+  100% { clip: rect(40px, 9999px, 70px, 0); }
+}
+
+/* Neon border pulse */
+@keyframes neon-border-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 5px #FCE500,
+      0 0 10px #FCE500,
+      0 0 20px #00F0FF,
+      inset 0 0 10px rgba(252, 229, 0, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 10px #FCE500,
+      0 0 20px #FCE500,
+      0 0 40px #00F0FF,
+      inset 0 0 20px rgba(0, 240, 255, 0.1);
+  }
+}
+
+.neon-border {
+  border: 2px solid #FCE500;
+  animation: neon-border-pulse 2s ease-in-out infinite;
+}
+
+/* Circuit board pattern overlay */
+body::before {
+  background-image:
+    linear-gradient(rgba(252, 229, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Tech stripes pattern */
+.tech-stripes {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(252, 229, 0, 0.1) 10px,
+    rgba(252, 229, 0, 0.1) 20px
+  );
+}
+
+/* Cyberpunk badge */
+.cp-badge {
+  display: inline-block;
+  padding: 5px 15px;
+  background: #FCE500;
+  color: #0A0E27;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+  box-shadow: 0 0 10px rgba(252, 229, 0, 0.5);
+}
+
+/* Status indicator */
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00F0FF;
+  box-shadow: 0 0 10px #00F0FF;
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 10px #00F0FF;
+  }
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 20px #00F0FF;
+  }
+}
+
+/* Post tags enhancement */
+.post-tag {
+  background: linear-gradient(135deg, rgba(252, 229, 0, 0.2), rgba(0, 240, 255, 0.2));
+  border: 1px solid #00F0FF;
+  padding: 3px 10px;
+  margin: 3px;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);
+}
+
+.post-tag:hover {
+  background: #FCE500;
+  color: #0A0E27 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(252, 229, 0, 0.4);
+}
