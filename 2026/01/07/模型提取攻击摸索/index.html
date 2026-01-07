@@ -1,0 +1,421 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>模型提取攻击摸索 | NIGHT CITY DATABASE</title><meta name="author" content="V"><meta name="copyright" content="V"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta property="og:type" content="article">
+<meta property="og:title" content="模型提取攻击摸索">
+<meta property="og:url" content="http://example.com/2026/01/07/%E6%A8%A1%E5%9E%8B%E6%8F%90%E5%8F%96%E6%94%BB%E5%87%BB%E6%91%B8%E7%B4%A2/index.html">
+<meta property="og:site_name" content="NIGHT CITY DATABASE">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/AiHaibara1.jpg">
+<meta property="article:published_time" content="2026-01-07T12:54:31.000Z">
+<meta property="article:modified_time" content="2026-01-07T17:02:42.812Z">
+<meta property="article:author" content="V">
+<meta property="article:tag" content="AI安全">
+<meta property="article:tag" content="模型窃取">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/AiHaibara1.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "模型提取攻击摸索",
+  "url": "http://example.com/2026/01/07/%E6%A8%A1%E5%9E%8B%E6%8F%90%E5%8F%96%E6%94%BB%E5%87%BB%E6%91%B8%E7%B4%A2/",
+  "image": "http://example.com/img/AiHaibara1.jpg",
+  "datePublished": "2026-01-07T12:54:31.000Z",
+  "dateModified": "2026-01-07T17:02:42.812Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "V",
+      "url": "http://example.com/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/AiHaibara1.jpg"><link rel="canonical" href="http://example.com/2026/01/07/%E6%A8%A1%E5%9E%8B%E6%8F%90%E5%8F%96%E6%94%BB%E5%87%BB%E6%91%B8%E7%B4%A2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '模型提取攻击摸索',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/cyberpunk2077.css"><link rel="stylesheet" href="/css/life-pages.css?1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="/css/cyberpunk-extra.css"><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/AiHaibara1.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-terminal"></i><span> MAIN DATABASE</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-microchip"></i><span> DATA LOGS</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> TAGS</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-database"></i><span> ARCHIVE</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> LIFE SECTORS</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><i class="fa-fw fa fa-book"></i><span> DIARY</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-images"></i><span> PHOTOS</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> MUSIC</span></a></li><li><a class="site-page child" href="/novel/"><i class="fa-fw fas fa-book-reader"></i><span> NOVELS</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-plug"></i><span> NETRUNNER LINKS</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-secret"></i><span> ABOUT V</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/AiHaibara1.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">NIGHT CITY DATABASE</span></a><a class="nav-page-title" href="/"><span class="site-name">模型提取攻击摸索</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-terminal"></i><span> MAIN DATABASE</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-microchip"></i><span> DATA LOGS</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> TAGS</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-database"></i><span> ARCHIVE</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-heartbeat"></i><span> LIFE SECTORS</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><i class="fa-fw fa fa-book"></i><span> DIARY</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-images"></i><span> PHOTOS</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> MUSIC</span></a></li><li><a class="site-page child" href="/novel/"><i class="fa-fw fas fa-book-reader"></i><span> NOVELS</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-plug"></i><span> NETRUNNER LINKS</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user-secret"></i><span> ABOUT V</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">模型提取攻击摸索</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-07T12:54:31.000Z" title="发表于 2026-01-07 20:54:31">2026-01-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-07T17:02:42.812Z" title="更新于 2026-01-08 01:02:42">2026-01-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>   本文记录了我针对“模型提取攻击（Model Extraction Attacks, MEAs）”进行的系统性研究实验。模型窃取本质上是利用黑盒接口的查询-响应机制，通过训练影子模型（Substitute Model）来复制靶机模型（Victim Model）的决策逻辑。</p>
+<p>   整个研究从最初的软标签（Soft-label）窃取开始，逐步深入到硬标签（Hard-label）环境下的决策边界探测，并规划了未来在复杂防御干扰下的自适应攻击路径。</p>
+<h2 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h2><p>在“机器学习即服务”（MLaaS）环境下，攻击者通常只能访问受限的 API 1111。本项目旨在通过异构模型（以 VGG-11 拟合 ResNet-18）验证跨架构提取的稳健性。</p>
+<p>   实验主要分为以下阶段：</p>
+<p>   Stage 1：软标签提取。 利用 API 返回的完整置信度向量，通过分布对齐实现快速克隆。</p>
+<p>   Stage 2：硬标签窃取。 在仅能获取类别索引的极端信息受限环境下，通过底层采样策略（二分搜索与邻域增强）探测高维决策边界。</p>
+<p>   Stage 3（undo）：防御干扰对抗。 模拟靶机部署差分隐私（DP）、输出扰动及查询检测等防御后的自适应攻击 。</p>
+<h2 id="文献综述与攻防体系划分"><a href="#文献综述与攻防体系划分" class="headerlink" title="文献综述与攻防体系划分"></a>文献综述与攻防体系划分</h2><p>根据 2025 年最新的系统性综述及前沿文献，模型提取攻防已形成严密的分类矩阵 ：</p>
+<h3 id="攻击范式层-Attack-Mechanisms"><a href="#攻击范式层-Attack-Mechanisms" class="headerlink" title="攻击范式层 (Attack Mechanisms)"></a>攻击范式层 (Attack Mechanisms)</h3><ul>
+<li><strong>替代模型训练 (Substitute Model Training)：</strong> 利用查询反馈训练功能等价的影子模型（本项目核心逻辑）。</li>
+<li><strong>方程求解与参数还原：</strong> 针对简单模型或特定激活函数（如 ReLU）进行权重精确重构 。</li>
+<li><strong>解释引导与梯度估计：</strong> 利用热力图或样本梯度加速提取（如 SPSG 策略）。</li>
+</ul>
+<h3 id="数据策略层-Data-Strategies"><a href="#数据策略层-Data-Strategies" class="headerlink" title="数据策略层 (Data Strategies)"></a>数据策略层 (Data Strategies)</h3><ul>
+<li><strong>问题域攻击 (Problem Domain)：</strong> 使用与靶机同分布的数据（如本项目对 CIFAR-10 的划分）。</li>
+<li><strong>非问题域攻击 (Non-problem Domain)：</strong> 利用无关数据通过领域自适应完成提取（如 <strong>Marich</strong> 策略）。</li>
+<li><strong>无数据攻击 (Data-free)：</strong> 完全依赖 GAN 生成查询样本。</li>
+</ul>
+<h3 id="防御技术图谱-Defense-Mechanisms"><a href="#防御技术图谱-Defense-Mechanisms" class="headerlink" title="防御技术图谱 (Defense Mechanisms)"></a>防御技术图谱 (Defense Mechanisms)</h3><ul>
+<li><strong>攻击预防 (Prevention)：</strong> 包含 <strong>对抗训练</strong>（增强鲁棒性）、<strong>输出&#x2F;数据扰动</strong>（如加入 $\epsilon$-DP 噪声）、<strong>访问控制</strong>（基于速率限制或 PoW）。</li>
+<li><strong>监测与验证 (Detection &amp; Verification)：</strong><ul>
+<li><strong>查询模式监控：</strong> 如 <strong>PRADA</strong> 监测查询分布的统计偏差 。</li>
+<li><strong>所有权水印 (Watermarking)：</strong> 在模型中嵌入特定 trigger 以便后事追溯所有权。</li>
+<li><strong>指纹识别 (Fingerprinting)：</strong> 利用边界特征生成唯一模型标识。</li>
+</ul>
+</li>
+</ul>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>Python</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="核心攻击实现方案"><a href="#核心攻击实现方案" class="headerlink" title="核心攻击实现方案"></a>核心攻击实现方案</h2><h3 id="靶机与-API-环境构建-Stage-0-Done"><a href="#靶机与-API-环境构建-Stage-0-Done" class="headerlink" title="靶机与 API 环境构建 (Stage 0 - Done)"></a>靶机与 API 环境构建 (Stage 0 - Done)</h3><p>   靶机采用 ResNet-18 架构，在 CIFAR-10 数据集上训练 50 个 Epoch，达到 <strong>73.22%</strong> 的测试准确率。</p>
+<h3 id="Stage-1-软标签分布拟合-Done"><a href="#Stage-1-软标签分布拟合-Done" class="headerlink" title="Stage 1: 软标签分布拟合 (Done)"></a>Stage 1: 软标签分布拟合 (Done)</h3><p>此阶段假设 API 返回完整的 Softmax 概率。通过 KL 散度（Kullback-Leibler Divergence）最小化影子模型与靶机的输出分布差异 14。</p>
+<p>   实验数据： 仅 10 轮迭代即达到 67.74% 准确率，保真度（Fidelity）为 81.05%。</p>
+<h3 id="Stage-2-硬标签边界探测-Doing"><a href="#Stage-2-硬标签边界探测-Doing" class="headerlink" title="Stage 2: 硬标签边界探测 (Doing)"></a>Stage 2: 硬标签边界探测 (Doing)</h3><p>   这一阶段是本研究的重难点。我们将其分为 <strong>特征空间采样（底层逻辑）</strong> 与 <strong>高阶算法优化（执行方案）</strong>。</p>
+<h4 id="A-底层空间采样逻辑"><a href="#A-底层空间采样逻辑" class="headerlink" title="A. 底层空间采样逻辑"></a>A. 底层空间采样逻辑</h4><ul>
+<li><p>A1：决策边界二分搜索 (Binary Search) (Done)</p>
+<p>   在两类样本间通过线性插值迭代逼近决策边界点。</p>
+<p>   结果： 准确率 71.87%，但保真度仅 79.14%，且因查询开销过大耗时达 5 小时。</p>
+</li>
+<li><p>A2：邻域采样增强与 Mixup (Done)</p>
+<p>   利用大规模数据增强和随机插值填补特征岛屿。</p>
+<p>   结果： 保真度高达 90.79%，Mixup 更是将准确率推至 76.29%。</p>
+</li>
+</ul>
+<h4 id="B-主动学习优化-变分采样-Undo"><a href="#B-主动学习优化-变分采样-Undo" class="headerlink" title="B. 主动学习优化 - 变分采样 (Undo)"></a>B. 主动学习优化 - 变分采样 (Undo)</h4><p>参考 <strong>Marich</strong> 算法 15，计划通过熵采样（Entropy Sampling）与梯度多样性筛选，只查询对影子模型最具“启发性”的样本，以在有限配额内最大化信息增益 。</p>
+<h4 id="C-解释性引导-梯度估计-Undo"><a href="#C-解释性引导-梯度估计-Undo" class="headerlink" title="C. 解释性引导 - 梯度估计 (Undo)"></a>C. 解释性引导 - 梯度估计 (Undo)</h4><p>参考 <strong>SPSG</strong> 策略，计划引入超像素扰动（SPGQ）在硬标签下估算伪梯度方向，使影子模型精准学习靶机的决策焦点。</p>
+<hr>
+<h2 id="防御干扰下的攻击-Stage-3-Undo"><a href="#防御干扰下的攻击-Stage-3-Undo" class="headerlink" title="防御干扰下的攻击 (Stage 3 - Undo)"></a>防御干扰下的攻击 (Stage 3 - Undo)</h2><ol>
+<li><strong>应对差分隐私与输出扰动：</strong> 研究影子模型在靶机加入 $\epsilon$-DP 噪声干扰下的收敛能力，探索标签细化（Label Refining）过滤技术 。</li>
+<li><strong>规避查询模式检测：</strong> 开发伪装采样技术，使攻击查询序列在统计特征上接近合法用户，从而绕过类似 <strong>PRADA</strong> 的拦截 。</li>
+<li><strong>对抗主动防御（Honeypots）：</strong> 研究影子模型如何识别并剥离由靶机主动诱导生成的防御性“错误模式” 。</li>
+</ol>
+<hr>
+<h2 id="阶段性实验数据总结-Evaluation"><a href="#阶段性实验数据总结-Evaluation" class="headerlink" title="阶段性实验数据总结 (Evaluation)"></a>阶段性实验数据总结 (Evaluation)</h2><table>
+<thead>
+<tr>
+<th><strong>攻击策略</strong></th>
+<th><strong>状态</strong></th>
+<th><strong>准确率 (Acc)</strong></th>
+<th><strong>保真度 (Fidelity)</strong></th>
+<th><strong>核心洞察</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Stage 1 (Soft)</strong></td>
+<td><strong>Done</strong></td>
+<td>67.74%</td>
+<td>81.05%</td>
+<td>信息丰度高，学习最稳健。</td>
+</tr>
+<tr>
+<td><strong>Stage 2-A1 (Binary)</strong></td>
+<td><strong>Done</strong></td>
+<td>71.87%</td>
+<td>79.14%</td>
+<td>易陷入分布外“孤岛”，拟合效率低。</td>
+</tr>
+<tr>
+<td><strong>Stage 2-A2 (Aug)</strong></td>
+<td><strong>Done</strong></td>
+<td>72.57%</td>
+<td><strong>90.79%</strong></td>
+<td><strong>最优克隆策略</strong>：大规模采样深度复刻行为。</td>
+</tr>
+<tr>
+<td><strong>Stage 2-Mixup</strong></td>
+<td><strong>Done</strong></td>
+<td><strong>76.29%</strong></td>
+<td>86.20%</td>
+<td>识别力极强，但边界平滑导致克隆度下降。</td>
+</tr>
+</tbody></table>
+<h2 id="总结与思考"><a href="#总结与思考" class="headerlink" title="总结与思考"></a>总结与思考</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">V</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2026/01/07/%E6%A8%A1%E5%9E%8B%E6%8F%90%E5%8F%96%E6%94%BB%E5%87%BB%E6%91%B8%E7%B4%A2/">http://example.com/2026/01/07/%E6%A8%A1%E5%9E%8B%E6%8F%90%E5%8F%96%E6%94%BB%E5%87%BB%E6%91%B8%E7%B4%A2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">NIGHT CITY DATABASE</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI%E5%AE%89%E5%85%A8/">AI安全</a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E5%9E%8B%E7%AA%83%E5%8F%96/">模型窃取</a><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></div><div class="post-share"><div class="social-share" data-image="/img/AiHaibara1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/08/02/markdown%E8%AF%AD%E6%B3%95/" title="Markdown语法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Markdown语法</div></div><div class="info-2"><div class="info-item-1">alsoB站上刷的到语法表，感觉比我之前的好多了，copy过来）</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/AiHaibara1.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">V</div><div class="author-info-description">NETRUNNER | NIGHT CITY RESIDENT</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Morgenro/"><i class="fas fa-plug"></i><span>Jack In</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">⚡ SYSTEM MESSAGE: Welcome to Night City Database. All data streams encrypted. Stay Chrome, Choom!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">项目简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0%E4%B8%8E%E6%94%BB%E9%98%B2%E4%BD%93%E7%B3%BB%E5%88%92%E5%88%86"><span class="toc-number">3.</span> <span class="toc-text">文献综述与攻防体系划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E8%8C%83%E5%BC%8F%E5%B1%82-Attack-Mechanisms"><span class="toc-number">3.1.</span> <span class="toc-text">攻击范式层 (Attack Mechanisms)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%AD%96%E7%95%A5%E5%B1%82-Data-Strategies"><span class="toc-number">3.2.</span> <span class="toc-text">数据策略层 (Data Strategies)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E5%BE%A1%E6%8A%80%E6%9C%AF%E5%9B%BE%E8%B0%B1-Defense-Mechanisms"><span class="toc-number">3.3.</span> <span class="toc-text">防御技术图谱 (Defense Mechanisms)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">环境配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%94%BB%E5%87%BB%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="toc-number">5.</span> <span class="toc-text">核心攻击实现方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%B6%E6%9C%BA%E4%B8%8E-API-%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA-Stage-0-Done"><span class="toc-number">5.1.</span> <span class="toc-text">靶机与 API 环境构建 (Stage 0 - Done)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stage-1-%E8%BD%AF%E6%A0%87%E7%AD%BE%E5%88%86%E5%B8%83%E6%8B%9F%E5%90%88-Done"><span class="toc-number">5.2.</span> <span class="toc-text">Stage 1: 软标签分布拟合 (Done)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stage-2-%E7%A1%AC%E6%A0%87%E7%AD%BE%E8%BE%B9%E7%95%8C%E6%8E%A2%E6%B5%8B-Doing"><span class="toc-number">5.3.</span> <span class="toc-text">Stage 2: 硬标签边界探测 (Doing)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-%E5%BA%95%E5%B1%82%E7%A9%BA%E9%97%B4%E9%87%87%E6%A0%B7%E9%80%BB%E8%BE%91"><span class="toc-number">5.3.1.</span> <span class="toc-text">A. 底层空间采样逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-%E4%B8%BB%E5%8A%A8%E5%AD%A6%E4%B9%A0%E4%BC%98%E5%8C%96-%E5%8F%98%E5%88%86%E9%87%87%E6%A0%B7-Undo"><span class="toc-number">5.3.2.</span> <span class="toc-text">B. 主动学习优化 - 变分采样 (Undo)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E8%A7%A3%E9%87%8A%E6%80%A7%E5%BC%95%E5%AF%BC-%E6%A2%AF%E5%BA%A6%E4%BC%B0%E8%AE%A1-Undo"><span class="toc-number">5.3.3.</span> <span class="toc-text">C. 解释性引导 - 梯度估计 (Undo)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B2%E5%BE%A1%E5%B9%B2%E6%89%B0%E4%B8%8B%E7%9A%84%E6%94%BB%E5%87%BB-Stage-3-Undo"><span class="toc-number">6.</span> <span class="toc-text">防御干扰下的攻击 (Stage 3 - Undo)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B6%E6%AE%B5%E6%80%A7%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93-Evaluation"><span class="toc-number">7.</span> <span class="toc-text">阶段性实验数据总结 (Evaluation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E6%80%9D%E8%80%83"><span class="toc-number">8.</span> <span class="toc-text">总结与思考</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/07/%E6%A8%A1%E5%9E%8B%E6%8F%90%E5%8F%96%E6%94%BB%E5%87%BB%E6%91%B8%E7%B4%A2/" title="模型提取攻击摸索">模型提取攻击摸索</a><time datetime="2026-01-07T12:54:31.000Z" title="发表于 2026-01-07 20:54:31">2026-01-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/02/markdown%E8%AF%AD%E6%B3%95/" title="Markdown语法">Markdown语法</a><time datetime="2025-08-01T16:00:00.000Z" title="发表于 2025-08-02 00:00:00">2025-08-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/29/%E5%B9%B3%E6%9D%BF%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="平板远程连接云服务器">平板远程连接云服务器</a><time datetime="2025-07-29T11:54:07.000Z" title="发表于 2025-07-29 19:54:07">2025-07-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/25/7%E6%9C%88%E9%AB%98%E4%B8%AD%E6%9C%8B%E5%8F%8B%E6%9D%A5%E8%AE%BF%E8%AE%B0/" title="7月高中朋友来访记">7月高中朋友来访记</a><time datetime="2025-07-25T13:42:09.000Z" title="发表于 2025-07-25 21:42:09">2025-07-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/16/MoeChat/" title="MoeChat">MoeChat</a><time datetime="2025-07-16T14:40:15.000Z" title="发表于 2025-07-16 22:40:15">2025-07-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2077 - 2026 By V</div><div class="footer_custom_text"><span style="color:#FCE500;">[ NEURAL LINK ESTABLISHED ]</span> | System Status: <span style="color:#00F0FF;">ONLINE</span> | <span style="color:#FF003C;">Night City Operations</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'all',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'Morgenro/Morgenro.github.io',
+      'data-repo-id': 'R_kgDOOnQMCg',
+      'data-category-id': 'DIC_kwDOOnQMCs4Cs90C',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script src="/js/cyberpunk2077.js"></script><script src="/js/cyberpunk-extra.js"></script><script src="/js/life-pages.js?1"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
