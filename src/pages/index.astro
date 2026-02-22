@@ -11,15 +11,15 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <style>
       *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-      html,body{width:100%;height:100%;overflow:hidden;background:#050505}
+      /* 背景强制纯黑 */
+      html,body{width:100%;height:100%;overflow:hidden;background:#000000}
       canvas{display:block;position:fixed;inset:0;width:100vw;height:100vh;z-index: 1;}
       
-      /* 背景微小扫描线效果 */
       body::before {
         content: "";
         position: fixed;
         inset: 0;
-        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), 
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%), 
                     linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
         background-size: 100% 4px, 4px 100%;
         z-index: 2;
@@ -31,11 +31,10 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
     <canvas id="c"></canvas>
     <script>
       const canvas = document.getElementById('c') as HTMLCanvasElement;
-      // 使用 alpha: false 提高渲染性能
+      // 关闭 alpha 通道以获得更好的混合性能
       const ctx    = canvas.getContext('2d', { alpha: false })!;
       let W = canvas.width  = window.innerWidth;
       let H = canvas.height = window.innerHeight;
-
       const FONT          = "'Space Mono',monospace";
       const REPEL_R       = 130;
       const REPEL_STR     = 9000;
@@ -43,7 +42,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       const DAMP          = 0.80;
       const LABEL_REPEL_R   = REPEL_R  * 0.30;
       const LABEL_REPEL_STR = REPEL_STR * 0.05;
-
       const mouse = { x: -9999, y: -9999 };
 
       interface Ball {
@@ -51,7 +49,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         r:number; fill:string; stroke:string; lw:number; opacity:number;
         label?:string; href?:string|null; labelColor?:string; labelFontSize?:number;
         isMenu?:boolean; isSub?:boolean; isX?:boolean; dying?:boolean;
-        glowColor?:string; // 新增发光颜色属性
+        glowColor?:string;
       }
       interface Frag {
         x:number; y:number; vx:number; vy:number;
@@ -115,8 +113,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
         return{x:x0+Math.random()*(x1-x0),y:y0+Math.random()*(y1-y0)};
       }
 
-      function mkBall(bx:number,by:number,r:number,fill:string,stroke:string,lw=1.2):Ball{
-        // 自动根据描边提取发光色
+      function mkBall(bx:number,by:number,r:number,fill:string,stroke:string,lw=0):Ball{
         return{x:bx,y:by,bx,by,vx:0,vy:0,r,fill,stroke,lw,opacity:1, glowColor: stroke};
       }
 
@@ -127,27 +124,27 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           const r=big?34+Math.random()*18:10+Math.random()*20;
           const pos=placeBall(r, 0.20,0.25, 0.13,0.14);
           const a=+(0.22+Math.random()*0.42).toFixed(2);
-          balls.push(mkBall(pos.x,pos.y,r,`rgba(255,69,0,${a})`,`rgba(255,69,0,0.85)`,1.2));
+          balls.push(mkBall(pos.x,pos.y,r,`rgba(255,69,0,${a})`,`rgba(255,69,0,0.85)`));
         }
         for(let i=0;i<33;i++){
           const big=Math.random()<0.10;
           const r=big?30+Math.random()*18:8+Math.random()*18;
           const pos=placeBall(r, 0.76,0.70, 0.13,0.13);
           const a=+(0.20+Math.random()*0.38).toFixed(2);
-          balls.push(mkBall(pos.x,pos.y,r,`rgba(0,85,255,${a})`,`rgba(0,85,255,0.80)`,1.2));
+          balls.push(mkBall(pos.x,pos.y,r,`rgba(0,85,255,${a})`,`rgba(0,85,255,0.80)`));
         }
         for(let i=0;i<18;i++){
           const r=7+Math.random()*15;
           const pos=placeBall(r, 0.50,0.50, 0.20,0.20);
           const a=+(0.12+Math.random()*0.22).toFixed(2);
           const col=Math.random()<0.5?`rgba(255,69,0,${a})`:`rgba(0,85,255,${a})`;
-          balls.push(mkBall(pos.x,pos.y,r,col,`rgba(180,180,180,0.3)`,1.0));
+          balls.push(mkBall(pos.x,pos.y,r,col,`rgba(180,180,180,0.3)`,0));
         }
         for(let i=0;i<20;i++){
           const r=4+Math.random()*9;
           const pos=placeBall(r, 0.50,0.50, 0.45,0.45);
           const a=+(0.06+Math.random()*0.13).toFixed(2);
-          balls.push(mkBall(pos.x,pos.y,r,`rgba(209,209,209,${a})`,`rgba(209,209,209,0.3)`,0.8));
+          balls.push(mkBall(pos.x,pos.y,r,`rgba(209,209,209,${a})`,`rgba(209,209,209,0.3)`,0));
         }
 
         let candidates=balls.filter(b=>b.r>=36&&b.bx<W*0.48&&b.by<H*0.56);
@@ -161,7 +158,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           mb.fill='rgba(255,69,0,1)';
           mb.stroke='#FF4500';
           mb.glowColor='#FF4500';
-          mb.lw=2.5;
+          mb.lw=0;
           menuIdx=balls.indexOf(mb);
         }
       }
@@ -186,7 +183,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           {label:'BLOG',  href:'/blog',  r:44+Math.random()*14, fill:'rgba(255,69,0,0.95)',  stroke:'#FF4500', text:'#0A0A0A'},
           {label:'DIARY', href:'/diary', r:40+Math.random()*15, fill:'rgba(255,69,0,0.90)',  stroke:'#FF4500', text:'#0A0A0A'},
           {label:'ABOUT', href:'/about', r:48+Math.random()*12, fill:'rgba(0,85,255,0.95)',  stroke:'#0055FF', text:'#ffffff'},
-          {label:'✕',    href:null,     r:34+Math.random()*11, fill:'rgba(90,90,90,0.95)',  stroke:'#ffffff', text:'#ffffff'},
+          {label:'✕',    href:null,     r:34+Math.random()*11, fill:'rgba(255,255,255,0.95)', stroke:'rgba(255,255,255,0)', text:'#000000'},
         ];
         for(const d of defs){
           const pos=findGap(d.r);
@@ -195,12 +192,12 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
             bx:pos.x,by:pos.y,
             vx:(Math.random()-0.5)*40,
             vy:(Math.random()-0.5)*40,
-            r:d.r, fill:d.fill, stroke:d.stroke, lw:2.5, opacity:0,
+            r:d.r, fill:d.fill, stroke:d.stroke, lw:0, opacity:0,
             label:d.label, href:d.href,
             labelColor:d.text,
             labelFontSize:labelFS(d.r,d.label),
             isSub:true, isX:d.href===null,
-            glowColor: d.stroke
+            glowColor: d.label === '✕' ? '#ffffff' : d.fill
           };
           balls.push(b);
         }
@@ -226,7 +223,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           bx:pos.x,by:pos.y,
           vx:0,vy:0,
           r, fill:'rgba(255,69,0,1)',
-          stroke:'#FF4500', lw:2.5, opacity:0,
+          stroke:'#FF4500', lw:0, opacity:0,
           label:'MENU', labelColor:'#0A0A0A',
           labelFontSize:labelFS(r,'MENU'),
           isMenu:true, glowColor:'#FF4500'
@@ -246,12 +243,10 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           const isLabeled=!!(b.isMenu||b.isSub);
           const rR=isLabeled?LABEL_REPEL_R:REPEL_R;
           const rS=isLabeled?LABEL_REPEL_STR:REPEL_STR;
-
-          // --- 核心修改：模拟子球体弹出时的路径排斥效果 ---
+          
           let targetX = mouse.x;
           let targetY = mouse.y;
           
-          // 如果子球正在移动到目标点，且未被用户点击，则背景球也会被这些子球排斥
           if(!isLabeled) {
             for(const sub of balls) {
                 if(sub.isSub && !sub.dying && sub.opacity < 0.9) {
@@ -286,21 +281,32 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       }
 
       function draw(now:number){
-        ctx.fillStyle = '#050505'; // 重新涂黑背景
-        ctx.fillRect(0,0,W,H);
+        /**
+         * 重点修改区域：实现“干涸感”清理
+         * 1. 降低亮度，让最暗的灰色（边缘）直接变成纯黑。
+         * 2. 增强对比度，让颜色向中心收缩，产生“干涸”的动态过程。
+         */
+        ctx.save();
+        ctx.filter = 'brightness(0.92) contrast(1.1)'; // 核心滤镜：让灰色迅速收敛消失
+        ctx.drawImage(canvas, 0, 0); // 将上一帧画面应用滤镜后画回自己
+        ctx.restore();
+
+        // 用极高透明度的纯黑覆盖，防止颜色溢出，并清理背景
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+        ctx.fillRect(0, 0, W, H);
         
         for(const b of balls){
           if(b.opacity<=0.01) continue;
           ctx.globalAlpha=b.opacity;
-
-          // 一开始就有的炫光效果（ShadowBlur）
           ctx.save();
+          
+          // 渲染发光
           if(b.glowColor) {
-              ctx.shadowBlur = 15;
+              ctx.shadowBlur = 10;
               ctx.shadowColor = b.glowColor;
           }
 
-          // MENU 脉冲光环 (保留简单的发光波纹)
+          // 菜单球的额外脉冲效果
           if(b.isMenu&&!b.dying){
             const ph=(now/1800)%1;
             const rr=b.r + ph*20;
@@ -313,9 +319,12 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           ctx.beginPath();
           ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
           ctx.fillStyle=b.fill; ctx.fill();
-          ctx.strokeStyle=b.stroke; ctx.lineWidth=b.lw; ctx.stroke();
-          ctx.restore(); // 结束发光渲染
-
+          if(b.lw > 0) {
+            ctx.strokeStyle=b.stroke; ctx.lineWidth=b.lw; ctx.stroke();
+          }
+          ctx.restore();
+          
+          // 渲染文字
           if(b.label&&b.r>8){
             ctx.fillStyle=b.labelColor??'#fff';
             ctx.font=`bold ${b.labelFontSize??labelFS(b.r,b.label)}px ${FONT}`;
@@ -325,6 +334,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           ctx.globalAlpha=1;
         }
 
+        // 碎片渲染
         for(const p of frags){
           ctx.globalAlpha=p.life;
           ctx.beginPath(); ctx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2);
@@ -376,13 +386,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           }
         }
       });
-
       window.addEventListener('resize',()=>{
         W=canvas.width=window.innerWidth;
         H=canvas.height=window.innerHeight;
         generateBalls(); frags=[]; navState='idle';
       });
-
       generateBalls();
       document.fonts.ready.then(()=>requestAnimationFrame(loop));
     </script>
