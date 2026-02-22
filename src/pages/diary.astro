@@ -1,0 +1,512 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title="日记" description="个人日记" />
+    <style>
+      main {
+        width: 720px;
+        max-width: calc(100% - 2em);
+        margin: 2em auto;
+        padding: 0 1em;
+      }
+      .diary-timeline {
+        position: relative;
+        padding-left: 2em;
+      }
+      .diary-timeline::before {
+        content: '';
+        position: absolute;
+        left: 0.5em;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #e0e0e0;
+      }
+      .diary-item {
+        position: relative;
+        margin-bottom: 2em;
+        padding: 1em 1.2em;
+        background: #fff;
+        border: 1px solid #e8e8e8;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: box-shadow 0.2s ease;
+      }
+      .diary-item::before {
+        content: '';
+        position: absolute;
+        left: -1.75em;
+        top: 1.2em;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #888;
+        border: 2px solid #fff;
+      }
+      .diary-item:hover {
+        box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      }
+      .diary-date {
+        font-size: 0.85em;
+        color: #888;
+        margin-bottom: 0.3em;
+      }
+      .diary-title {
+        font-size: 1.1em;
+        font-weight: bold;
+        margin-bottom: 0.6em;
+        color: #333;
+      }
+      .diary-content {
+        font-size: 0.95em;
+        color: #555;
+        line-height: 1.7;
+      }
+      .diary-content p {
+        margin: 0.4em 0;
+      }
+      .giscus-container {
+        margin-top: 1.5em;
+        padding-top: 1em;
+        border-top: 1px solid #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h1>日记</h1>
+      <div class="diary-timeline">
+        <div class="diary-item" data-term="diary-2025-10-08">
+          <div class="diary-date">2025-10-08</div>
+          <div class="diary-title">国庆结束</div>
+          <div class="diary-content">
+            <p>衡越桑也是搬进了我们寝。好诶。今天9:30和衡越和官官爽学。</p>
+            <p>做15年数学，选择错一道，填空错3道，大题5错2道半。难受，但是也算是有进步吧。</p>
+            <p>哎，操作系统，久违了。</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-27">
+          <div class="diary-date">2025-09-27</div>
+          <div class="diary-title">体检</div>
+          <div class="diary-content">
+            <p>缺铁性贫血，这就去吃点羊肉串</p>
+            <p>下午做积分不等式，发现新知识点。什么，居然之前拉格朗日思路是错的吗？！，不是，那我之前是怎么做对题的？</p>
+            <p>晚上操作系统</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-25">
+          <div class="diary-date">2025-09-25</div>
+          <div class="diary-title">桦加沙结束</div>
+          <div class="diary-content">
+            <p>3道高数。</p>
+            <p>搞完高数强化学操作系统。</p>
+            <p>到深圳前桦加沙突然急转，深圳影响出乎意料的小。白屯了3桶桶面</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-22">
+          <div class="diary-date">2025-09-22</div>
+          <div class="diary-title">桦加沙来袭</div>
+          <div class="diary-content">
+            <p>4道高数。1000题强化开始，找了找重点题，每天每一章一道做。轮询()</p>
+            <p>搞完高数强化学操作系统。开始文件</p>
+            <p>24号超大台风。有点害怕停电。</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-19">
+          <div class="diary-date">2025-09-19</div>
+          <div class="diary-title">晚起</div>
+          <div class="diary-content">
+            <p>看完了死锁，但是分页没看完，等回寝室再看</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-18">
+          <div class="diary-date">2025-09-18</div>
+          <div class="diary-title">阿巴阿巴</div>
+          <div class="diary-content">
+            <p>进度不正常，咕咕了3天()</p>
+            <p>下午解决了进程线程加CPU调度。晚上搞完PV。看看死锁能解决不，不能就放到明天。明天还有分页分段。</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-14">
+          <div class="diary-date">2025-09-14</div>
+          <div class="diary-title">重整旗鼓</div>
+          <div class="diary-content">
+            <p>上午做了四道数学题，下午学操作系统。预计6~7天学完操作系统(如果正常进度的话)</p>
+            <p>下午搞完第一章概述，看着不多其实也不少哦</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-11">
+          <div class="diary-date">2025-09-11</div>
+          <div class="diary-title">机组结束</div>
+          <div class="diary-content">
+            <p>明天开始搞操作系统和数学强化</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-10">
+          <div class="diary-date">2025-09-10</div>
+          <div class="diary-title">别急，急也没用</div>
+          <div class="diary-content">
+            <p>呵呵，今天晚10点呛呛解决中央处理器</p>
+            <p>by the way,菈乌玛究极无敌大保底。我恨你mihoyo。我恨你.之前seed也歪了。。</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-09">
+          <div class="diary-date">2025-09-09</div>
+          <div class="diary-title">状态不对，小急一下</div>
+          <div class="diary-content">
+            <p>别说了，这几天学的进度太慢(倒不是学的进度慢，而是有两天实在是没怎么学)。现在是下午5点，今晚6小时解决中央处理器</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-05">
+          <div class="diary-date">2025-09-05</div>
+          <div class="diary-title">存储器结束</div>
+          <div class="diary-content">
+            <p>原来分页存储结构大头在操作系统。计组里面讲的还是比较浅的，替换算法没讲、多组分页式存储结构没讲。地址转换说的也不细。</p>
+            <p>不过整完之后也7点了，剩下时间背背单词吧。学的头疼。</p>
+            <p>剩下的指令系统争取明天一天搞完，CPU两天、总线加I\O一天。争取四天内结束计组</p>
+            <p>操作系统到时候上午就要写数学张宇增强了。下午学操作系统。争取九月20前结束操作系统。九月末结束计网。十月开搞真题</p>
+            <p>但是我王道课后题还没做诶，不过王道课后题好像就是真题来着。。。。那就相当于10月做王道课后题()</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-04">
+          <div class="diary-date">2025-09-04</div>
+          <div class="diary-title"></div>
+          <div class="diary-content">
+            <p>上午11点起床抽seed，好耶没歪。塞我嘴里(bushi)</p>
+            <p>中午12点半到图书馆，准备看玩3.4和3.5，一个磁盘一个Cache有点说法</p>
+            <p>到学校吃的太好了长胖了受不了了，准备少吃一点，晚饭实在不行不吃了</p>
+            <p>(后补)Cache搞到10点，头晕脑胀</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-03">
+          <div class="diary-date">2025-09-03</div>
+          <div class="diary-title">！||||</div>
+          <div class="diary-content">
+            <p>昨天晚上回去忘记背单词力，早上似乎也许是10点半到的图书馆，背100单词，复习23个</p>
+            <p>中午喊我们的swizzer起床，吃饭，下午一点半到图书馆开学。swizzer和我一个座位里面，学习效率就是高。学到下午4点半。看完3.3，一起去KTV。确实爽。唱到8点结束去经典四川饭店吃饭。有一说一，和衡越桑一起就是学的舒服，啊～巴适得板。</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-02">
+          <div class="diary-date">2025-09-02</div>
+          <div class="diary-title">？</div>
+          <div class="diary-content">
+            <p>早晨10点起床，翘一上午</p>
+            <p>下午1点30到图书馆，复习58个单词。然后开始学存储器</p>
+            <p>东西好碎，有很多我之前理解不到位的感觉，而且，不知道为什么进度好慢。刚刚干完RAM的知识点。ROM的的知识点还没赶到。</p>
+            <p>晚上回寝再把100个英语单词背一下。明天喊衡越桑一起去图书馆，晚上张帆想去KTV</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-09-01">
+          <div class="diary-date">2025-09-01</div>
+          <div class="diary-title">阿巴阿巴</div>
+          <div class="diary-content">
+            <p>早晨9点起床，10点到图书馆，背了一个小时的英语单词(复习81，新学100)</p>
+            <p>中午回寝室打了会游戏，没忍住打到了3点），下午学到9点图书馆把剩下的计组第二章搞完了。9点去操场走几圈回寝吗？蒜鸟蒜鸟。撤了</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-08-30">
+          <div class="diary-date">2025-08-30</div>
+          <div class="diary-title">restart</div>
+          <div class="diary-content">
+            <p>开学事项结束，早上9点到图书馆开学，早上没学太多，下午1点学到下午9点</p>
+            <p>计组第一章结束，第二章一半多</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-08-23">
+          <div class="diary-date">2025-08-23</div>
+          <div class="diary-title">数据结构结束</div>
+          <div class="diary-content">
+            <p>数据结构结束</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-08-21">
+          <div class="diary-date">2025-08-21</div>
+          <div class="diary-title">还是有点不行</div>
+          <div class="diary-content">
+            <p>回家里面自习就是有点效率不行</p>
+            <p>希望明天能搞完数据结构</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-08-20">
+          <div class="diary-date">2025-08-20</div>
+          <div class="diary-title">步入正轨</div>
+          <div class="diary-content">
+            <p>之前智齿长出来了,今天下午去拍了个x光,顺便洗了下牙</p>
+            <p>洗完牙之后牙痛,折磨</p>
+            <p>晚上看查找,刚刚看完AVL树;红黑和B有点难.但是hash还挺有印象的</p>
+            <p>希望明天能搞完数据结构</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-08-18">
+          <div class="diary-date">2025-08-18</div>
+          <div class="diary-title">进度停滞</div>
+          <div class="diary-content">
+            <p>图已看完，本想着趁热打铁搞完数据结构，奈何突发情况打断了计划，，，，</p>
+            <p>闲着背背英语单词罢了,哎,xhs刷408贴实在不是滋味,今天刚刚回到家,明天又要回老家哦.</p>
+            <p>急急急,奈何</p>
+            <p>哎</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-08-14">
+          <div class="diary-date">2025-08-14</div>
+          <div class="diary-title">进度还行</div>
+          <div class="diary-content">
+            <p>我本来以为红黑树和二叉平衡树在树这一章，没想到到哈夫曼树就结束了，还能看一部分图的内容；树这部分是真的记忆涌现了，还可以</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-08-13">
+          <div class="diary-date">2025-08-13</div>
+          <div class="diary-title">bushi</div>
+          <div class="diary-content">
+            <p>KMP果然还是有点点麻烦，我以为串顺手就解决了，没想到还是花了一下午</p>
+            <p>vscode-sever哪里都好，就是平板上使用鼠标操作还是有点难绷，中键滑一下直接到界面最底了</p>
+            <p>不过有一说一，一边复习一边打字记笔记真的有点爽；遇到不会的还能问deepseek。爽的没边了</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-08-11">
+          <div class="diary-date">2025-08-11</div>
+          <div class="diary-title">408：开！</div>
+          <div class="diary-content">
+            <p>目前希望：一周速通数据结构</p>
+            <p>线性表、栈队列数组等1～2天；串和树一天；图查找排序各一天</p>
+            <p>看看实力</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-08-05">
+          <div class="diary-date">2025-08-05</div>
+          <div class="diary-title">总结线代的一天</div>
+          <div class="diary-content">
+            <p>好久没写力(大嘘)</p>
+            <p>前几天做的线代向量组和矩阵的秩脑子有点乱</p>
+            <p>今天把线代笔记错题和整理一下,居然花了7个小时,,,</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-08-01">
+          <div class="diary-date">2025-08-01</div>
+          <div class="diary-title">加速加速</div>
+          <div class="diary-content">
+            <p>和朋友聊了聊进度发现学习速度有些慢了，おことわりです</p>
+            <p>时间要加速了</p>
+            <p>今天准备吧线性方程组的和向量与方程组的做完</p>
+            <p>中午买了三个肉包子给错了两个，真是吐了</p>
+            <p>重度鼻炎犯了，一卷纸用完了，向量与方程组还差4页，准备回宿舍写</p>
+            <p>消费主义陷阱害人，还好我及时退款</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-07-31">
+          <div class="diary-date">2025-07-31</div>
+          <div class="diary-title">七月的最后一天</div>
+          <div class="diary-content">
+            <p>线代和概率论就不做张宇的了，没咋了的线代和概率论的讲义（类似于张宇30讲）到了，做的真的很舒服，有知识点加例题。线代和概率论跟着没咋了网课加习题了</p>
+            <p>卡拉比丘诱惑我氪金</p>
+            <p>太可恶了卡拉比丘，怎么这么坏</p>
+            <p>氪了68+98</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-07-30">
+          <div class="diary-date">2025-07-30</div>
+          <div class="diary-title">好久没有更新博客的一天</div>
+          <div class="diary-content">
+            <p>前几天本来说是再接再厉做高数强化的，但是实在是不在状态写的磕磕绊绊</p>
+            <p>于是就转头开写线性代数</p>
+            <p>有一说一，线代前几张还是相当简单的，行列式和矩阵那部分</p>
+            <p>到了向量组大部分还是求是否线性相关，线代感觉耦合性相当差劲，老是涉及后面秩的知识点）到方程组做的就有点难受了，单纯凭借我现在忘的差不多的知识库有点不够用了。网上买了"没咋了"的网课和笔记，等到了看看网课说是</p>
+            <p>那么趁着笔记还没到就先搞了一下服务器和平板远程链接</p>
+            <p>~~实际上这一段就是我在平板上打的~~</p>
+            <p>就是可惜忘带鼠标过来了没办法cv，自己打代码算了</p>
+            <p>过一会笔记就到了开学网课，哎伊涅芙确实可爱捏，不过怕抽了没有木偶和少女力，蒜鸟蒜鸟</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-07-25">
+          <div class="diary-date">2025-07-25</div>
+          <div class="diary-title">出去玩了好几天后学的第一天</div>
+          <div class="diary-content">
+            <p>早起做英语完型，20道错了8道，难绷，确实是词汇量的锅</p>
+            <p>下午做张宇1000的强化高数,md第一题就恶心人.洛必达洛不了一点,就是得泰勒公式做.洛必达洛着洛着洛出一堆函数式出来,好恶心啊好恶心啊我真是吐了.舒适区的路径做不了洛了两个小时</p>
+            <p>早点回来写旅游博客力</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-07-19">
+          <div class="diary-date">2025-07-19</div>
+          <div class="diary-title">学多元积分的一天</div>
+          <div class="diary-content">
+            <p>头晕，题是做完了，但是有两个地方感觉没懂</p>
+            <p>头好懵</p>
+            <p>什么时候使用斯托克斯公式和曲线积分使用偏导转换成曲面积分有点没理解</p>
+            <p>公式笔记好多但是今天不想更新了就这样吧明天再说后天之前把多元积分整完似乎高数的基础篇就结束了后天晚上朋友来玩</p>
+            <p>今天是明天的"to be continue"</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-07-18">
+          <div class="diary-date">2025-07-18</div>
+          <div class="diary-title">正常学习的一天</div>
+          <div class="diary-content">
+            <p>中午起床，不饿，吃俩包子开学</p>
+            <p>第17章多元函数积分学预备知识</p>
+            <p>主要考点：方向导数，偏导，极值，旋度</p>
+            <p>做完8：40回来zzz主线</p>
+            <p>爱丽丝好看捏，后悔抽浮波柚叶了，希望能攒够小保底</p>
+            <p>为什么我小保底会歪</p>
+            <p>zzz老是歪我小保底，受不了了</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-07-17">
+          <div class="diary-date">2025-07-17</div>
+          <div class="diary-title">起晚导致没有接到顺丰电话导致知更鸟耳机晚了六个小时拿到的一天</div>
+          <div class="diary-content">
+            <p>不过还好键盘是放在存放点了</p>
+            <p>中午小吃两个包子带着键盘开学数学</p>
+            <p>有键盘打数学公式就是爽啊，可惜不支持英文字符和中文同时输入，并且不能选择SHift不切换中英文容易误触ei</p>
+            <p>明天带着电脑鼠标一起去(什么小显示器)</p>
+            <p>虽然做无穷级数还是有点小恶心,但是没有之前做题时候那种反胃的感觉了</p>
+            <p>准备数学的学习回到正轨了</p>
+            <p>公式太优美了</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-07-16">
+          <div class="diary-date">2025-07-16</div>
+          <div class="diary-title">被装修吵醒早起的一天</div>
+          <div class="diary-content">
+            <p>早晨10点起床抽柚叶,啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊歪了,早知道我就不起来了</p>
+            <p>物理支援歪成物理强攻了，哎，也好，正好我想抽物理异常</p>
+            <p>西红柿鸡蛋,好吃捏</p>
+            <p>这半个月用了快160G流量了</p>
+            <p>把电脑带到自习室狠狠偷流量,缓存了50个G的视频,晚上当助眠视频力</p>
+            <p>顺便在自习室下载了一个ai项目(MoeChat),这两天不学数学的时候玩一玩</p>
+            <p>下载的时候绕楼背了背单词,熟悉又陌生)</p>
+            <p>MoeChat好玩捏,人手一个nerou的时代指日可待了吗,期待</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-07-15">
+          <div class="diary-date">2025-07-15</div>
+          <div class="diary-title">日常起晚的一天+</div>
+          <div class="diary-content">
+            <p>有进步,今天早睡了半个小时捏</p>
+            <p>起床没事干,浅浅弄下博客吧~</p>
+            <p>我以为很简单,怎么说两个小时内也能结束,没想到搞到下午五点</p>
+            <p>整完打打每日吧,到下午六点四十去吃包子</p>
+            <p>倒霉倒霉倒霉,说是豆角肉的包子,没想到一吃是豆角榨菜的</p>
+            <p>好难吃</p>
+            <p>吃完饭去做做题</p>
+            <p>还是遇到困难了吗</p>
+            <p>后天之前背背英语单词吧,呵,小小数学题,你等我键盘到了</p>
+            <p>我在想要不要搞一个1h1g的免费服务器部署一下我的博客</p>
+            <p>到时候用平板更新博客也好,lightly做些代码题也好,都很方便</p>
+            <p>明后天就在寝室搞搞博客,背背英语单词吧</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-07-14">
+          <div class="diary-date">2025-07-14</div>
+          <div class="diary-title">日常起晚的一天++</div>
+          <div class="diary-content">
+            <p>昨天熬穿了,熬到第二天5点,起来头是晕的</p>
+            <p>开做无穷级数!有段时间没接触刚做的时候真的头疼,我以为我的知识点怎么说也能够覆盖基础篇</p>
+            <p>什么叫逐项运算不改变收敛半径?</p>
+            <p>像这种隔一道做不出来一道真的有点败人兴致啊</p>
+            <p>怀念前几天做知识点的速度力</p>
+            <p>用平板本身打字问deepseek知识点好麻烦哦,一些数学式子得在"符号""更多""返回"中来回变换才能答出来</p>
+            <p>于是去海鲜市场买了个二手罗技K380,花了63大洋.何时运到捏</p>
+            <p>我的知更鸟耳机终于要到了吗,可喜可贺啊.不过居然发到深圳去了吗,可恶啊</p>
+            <p>花了19块钱转运到河北</p>
+            <p>悲</p>
+            <p>磨磨蹭蹭做来一页到10点了</p>
+            <p>还是回来整理整理生疏的知识点先,上次整理知识点还是在第10章来着,有五章半知识点没整理了</p>
+            <p>整理知识点整理了40分钟快哦</p>
+          </div>
+        </div>
+        <div class="diary-item" data-term="diary-2025-07-13">
+          <div class="diary-date">2025-07-13</div>
+          <div class="diary-title">日常起晚的一天</div>
+          <div class="diary-content">
+            <p>我们六人寝的卷王居然都起晚了，这几个哥们真是学累了，天天9点起11点睡</p>
+            <p>正好起来搞搞博客日记</p>
+            <p>中午先浅浅吃个肯德基联名吧~</p>
+            <p>吐了，终于知道为什么小说推荐页面在公网上显示404了，我在menu中写的是Novel，在source中写的是novel，导致无法找到页面，真无敌了。</p>
+            <p>可恶的肯德基配送员，我的饮品居然放在店里没拿，呜呜呜</p>
+            <p>联动特色饮品真难喝</p>
+            <p>---------------------------------------------------------------</p>
+            <p>吐了，今天做微分方程的题做的恶心</p>
+            <p>拼尽全力无法战胜20道题（大嘘），今天有点不在状态，一些简单的变形都没做对，吐了。勉勉强强做完第15章</p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<script>
+  const giscusConfig = {
+    repo: 'Morgenro/My-Diary-Discussion',
+    repoId: 'R_kgDOPMtAUQ',
+    category: 'Announcements',
+    categoryId: 'DIC_kwDOPMtAUc4Cs9-Q',
+    mapping: 'specific',
+    strict: '0',
+    reactionsEnabled: '1',
+    emitMetadata: '0',
+    inputPosition: 'bottom',
+    theme: 'light',
+    lang: 'zh-CN',
+  };
+
+  let currentGiscusContainer: HTMLElement | null = null;
+
+  function loadGiscus(targetElement: HTMLElement, term: string) {
+    if (currentGiscusContainer) {
+      currentGiscusContainer.innerHTML = '';
+    }
+
+    let giscusDiv = targetElement.querySelector<HTMLElement>('.giscus-container');
+    if (!giscusDiv) {
+      giscusDiv = document.createElement('div');
+      giscusDiv.className = 'giscus-container';
+      targetElement.appendChild(giscusDiv);
+    }
+
+    currentGiscusContainer = giscusDiv;
+    giscusDiv.innerHTML = '';
+
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', giscusConfig.repo);
+    script.setAttribute('data-repo-id', giscusConfig.repoId);
+    script.setAttribute('data-category', giscusConfig.category);
+    script.setAttribute('data-category-id', giscusConfig.categoryId);
+    script.setAttribute('data-mapping', giscusConfig.mapping);
+    script.setAttribute('data-term', term);
+    script.setAttribute('data-strict', giscusConfig.strict);
+    script.setAttribute('data-reactions-enabled', giscusConfig.reactionsEnabled);
+    script.setAttribute('data-emit-metadata', giscusConfig.emitMetadata);
+    script.setAttribute('data-input-position', giscusConfig.inputPosition);
+    script.setAttribute('data-theme', giscusConfig.theme);
+    script.setAttribute('data-lang', giscusConfig.lang);
+    script.crossOrigin = 'anonymous';
+    script.async = true;
+
+    giscusDiv.appendChild(script);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const diaryItems = document.querySelectorAll<HTMLElement>('.diary-item');
+    if (diaryItems.length > 0) {
+      const first = diaryItems[0];
+      loadGiscus(first, first.getAttribute('data-term') || '');
+    }
+
+    diaryItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        const term = item.getAttribute('data-term') || '';
+        loadGiscus(item, term);
+        item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  });
+</script>

@@ -1,0 +1,390 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+      html,body{width:100%;height:100%;overflow:hidden;background:#050505}
+      canvas{display:block;position:fixed;inset:0;width:100vw;height:100vh;z-index: 1;}
+      
+      /* 背景微小扫描线效果 */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), 
+                    linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+        background-size: 100% 4px, 4px 100%;
+        z-index: 2;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <script>
+      const canvas = document.getElementById('c') as HTMLCanvasElement;
+      // 使用 alpha: false 提高渲染性能
+      const ctx    = canvas.getContext('2d', { alpha: false })!;
+      let W = canvas.width  = window.innerWidth;
+      let H = canvas.height = window.innerHeight;
+
+      const FONT          = "'Space Mono',monospace";
+      const REPEL_R       = 130;
+      const REPEL_STR     = 9000;
+      const SPRING        = 0.055;
+      const DAMP          = 0.80;
+      const LABEL_REPEL_R   = REPEL_R  * 0.30;
+      const LABEL_REPEL_STR = REPEL_STR * 0.05;
+
+      const mouse = { x: -9999, y: -9999 };
+
+      interface Ball {
+        x:number; y:number; bx:number; by:number; vx:number; vy:number;
+        r:number; fill:string; stroke:string; lw:number; opacity:number;
+        label?:string; href?:string|null; labelColor?:string; labelFontSize?:number;
+        isMenu?:boolean; isSub?:boolean; isX?:boolean; dying?:boolean;
+        glowColor?:string; // 新增发光颜色属性
+      }
+      interface Frag {
+        x:number; y:number; vx:number; vy:number;
+        r:number; color:string; life:number; decay:number;
+      }
+
+      let balls: Ball[] = [];
+      let frags: Frag[] = [];
+      let menuIdx = -1;
+      type NS = 'idle'|'open'|'closing';
+      let navState: NS = 'idle';
+
+      function gauss(m:number,s:number){
+        const u=Math.random()||1e-10,v=Math.random()||1e-10;
+        return m+s*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
+      }
+      function cl(v:number,lo:number,hi:number){return Math.max(lo,Math.min(hi,v));}
+      function dist(ax:number,ay:number,bx:number,by:number){return Math.hypot(ax-bx,ay-by);}
+
+      function labelFS(r:number, label:string):number {
+        const byWidth  = Math.floor(2.33 * r / Math.max(label.length, 1));
+        const byHeight = Math.floor(r * 0.82);
+        return Math.min(byWidth, byHeight);
+      }
+
+      function placeBall(r:number, cx:number, cy:number, sx:number, sy:number):{x:number,y:number}{
+        const pad=6;
+        const x0=r+pad, x1=W-r-pad, y0=r+pad, y1=H-r-pad;
+        for(let i=0;i<400;i++){
+          let x:number, y:number;
+          if(i<280){
+            x=cl(gauss(cx,sx)*W, x0, x1);
+            y=cl(gauss(cy,sy)*H, y0, y1);
+          } else {
+            x=x0+Math.random()*(x1-x0);
+            y=y0+Math.random()*(y1-y0);
+          }
+          let ok=true;
+          for(const b of balls){
+            if(b.dying) continue;
+            if(dist(x,y,b.bx,b.by)<b.r+r+6){ok=false;break;}
+          }
+          if(ok)return{x,y};
+        }
+        return{x:x0+Math.random()*(x1-x0),y:y0+Math.random()*(y1-y0)};
+      }
+
+      function findGap(r:number,xRange:[number,number]=[0,1],yRange:[number,number]=[0,1]):{x:number,y:number}{
+        const x0=xRange[0]*W+r, x1=xRange[1]*W-r;
+        const y0=yRange[0]*H+r, y1=yRange[1]*H-r;
+        for(let i=0;i<300;i++){
+          const x=x0+Math.random()*(x1-x0);
+          const y=y0+Math.random()*(y1-y0);
+          let ok=true;
+          for(const b of balls){
+            if(b.dying) continue;
+            if(dist(x,y,b.bx,b.by)<b.r+r+10){ok=false;break;}
+          }
+          if(ok)return{x,y};
+        }
+        return{x:x0+Math.random()*(x1-x0),y:y0+Math.random()*(y1-y0)};
+      }
+
+      function mkBall(bx:number,by:number,r:number,fill:string,stroke:string,lw=1.2):Ball{
+        // 自动根据描边提取发光色
+        return{x:bx,y:by,bx,by,vx:0,vy:0,r,fill,stroke,lw,opacity:1, glowColor: stroke};
+      }
+
+      function generateBalls(){
+        balls=[];
+        for(let i=0;i<40;i++){
+          const big=Math.random()<0.14;
+          const r=big?34+Math.random()*18:10+Math.random()*20;
+          const pos=placeBall(r, 0.20,0.25, 0.13,0.14);
+          const a=+(0.22+Math.random()*0.42).toFixed(2);
+          balls.push(mkBall(pos.x,pos.y,r,`rgba(255,69,0,${a})`,`rgba(255,69,0,0.85)`,1.2));
+        }
+        for(let i=0;i<33;i++){
+          const big=Math.random()<0.10;
+          const r=big?30+Math.random()*18:8+Math.random()*18;
+          const pos=placeBall(r, 0.76,0.70, 0.13,0.13);
+          const a=+(0.20+Math.random()*0.38).toFixed(2);
+          balls.push(mkBall(pos.x,pos.y,r,`rgba(0,85,255,${a})`,`rgba(0,85,255,0.80)`,1.2));
+        }
+        for(let i=0;i<18;i++){
+          const r=7+Math.random()*15;
+          const pos=placeBall(r, 0.50,0.50, 0.20,0.20);
+          const a=+(0.12+Math.random()*0.22).toFixed(2);
+          const col=Math.random()<0.5?`rgba(255,69,0,${a})`:`rgba(0,85,255,${a})`;
+          balls.push(mkBall(pos.x,pos.y,r,col,`rgba(180,180,180,0.3)`,1.0));
+        }
+        for(let i=0;i<20;i++){
+          const r=4+Math.random()*9;
+          const pos=placeBall(r, 0.50,0.50, 0.45,0.45);
+          const a=+(0.06+Math.random()*0.13).toFixed(2);
+          balls.push(mkBall(pos.x,pos.y,r,`rgba(209,209,209,${a})`,`rgba(209,209,209,0.3)`,0.8));
+        }
+
+        let candidates=balls.filter(b=>b.r>=36&&b.bx<W*0.48&&b.by<H*0.56);
+        if(candidates.length===0) candidates=balls.filter(b=>b.r>=22&&b.bx<W*0.55&&b.by<H*0.65);
+        if(candidates.length>0){
+          const mb=candidates[Math.floor(Math.random()*candidates.length)];
+          mb.isMenu=true;
+          mb.label='MENU';
+          mb.labelColor='#0A0A0A';
+          mb.labelFontSize=labelFS(mb.r,'MENU');
+          mb.fill='rgba(255,69,0,1)';
+          mb.stroke='#FF4500';
+          mb.glowColor='#FF4500';
+          mb.lw=2.5;
+          menuIdx=balls.indexOf(mb);
+        }
+      }
+
+      function shatter(mx:number,my:number,r:number){
+        const n=18;
+        for(let i=0;i<n;i++){
+          const ang=(i/n)*Math.PI*2+Math.random()*0.4;
+          const spd=5+Math.random()*13;
+          frags.push({
+            x:mx,y:my,
+            vx:Math.cos(ang)*spd, vy:Math.sin(ang)*spd,
+            r:2+Math.random()*(r*0.30),
+            color:Math.random()<0.65?'#FF4500':'#FF8844',
+            life:1, decay:0.014+Math.random()*0.020
+          });
+        }
+      }
+
+      function spawnSubs(ox:number,oy:number){
+        const defs=[
+          {label:'BLOG',  href:'/blog',  r:44+Math.random()*14, fill:'rgba(255,69,0,0.95)',  stroke:'#FF4500', text:'#0A0A0A'},
+          {label:'DIARY', href:'/diary', r:40+Math.random()*15, fill:'rgba(255,69,0,0.90)',  stroke:'#FF4500', text:'#0A0A0A'},
+          {label:'ABOUT', href:'/about', r:48+Math.random()*12, fill:'rgba(0,85,255,0.95)',  stroke:'#0055FF', text:'#ffffff'},
+          {label:'✕',    href:null,     r:34+Math.random()*11, fill:'rgba(90,90,90,0.95)',  stroke:'#ffffff', text:'#ffffff'},
+        ];
+        for(const d of defs){
+          const pos=findGap(d.r);
+          const b:Ball={
+            x:ox,y:oy,
+            bx:pos.x,by:pos.y,
+            vx:(Math.random()-0.5)*40,
+            vy:(Math.random()-0.5)*40,
+            r:d.r, fill:d.fill, stroke:d.stroke, lw:2.5, opacity:0,
+            label:d.label, href:d.href,
+            labelColor:d.text,
+            labelFontSize:labelFS(d.r,d.label),
+            isSub:true, isX:d.href===null,
+            glowColor: d.stroke
+          };
+          balls.push(b);
+        }
+        navState='open';
+      }
+
+      function closeSubs(){
+        navState='closing';
+        balls.filter(b=>b.isSub).forEach(b=>{b.dying=true;});
+        setTimeout(()=>{
+          balls=balls.filter(b=>!b.isSub);
+          navState='idle';
+          spawnNewMenu();
+        },650);
+      }
+
+      function spawnNewMenu(){
+        const r=46+Math.random()*14;
+        const pos=findGap(r,[0,0.50],[0,0.58]);
+        const b:Ball={
+          x:pos.x+(Math.random()-0.5)*50,
+          y:pos.y+(Math.random()-0.5)*50,
+          bx:pos.x,by:pos.y,
+          vx:0,vy:0,
+          r, fill:'rgba(255,69,0,1)',
+          stroke:'#FF4500', lw:2.5, opacity:0,
+          label:'MENU', labelColor:'#0A0A0A',
+          labelFontSize:labelFS(r,'MENU'),
+          isMenu:true, glowColor:'#FF4500'
+        };
+        balls.push(b);
+        menuIdx=balls.length-1;
+      }
+
+      function update(){
+        for(const b of balls){
+          if(b.dying){
+            b.opacity=Math.max(0,b.opacity-0.045);
+          }else if(b.isSub||b.isMenu){
+            b.opacity=Math.min(1,b.opacity+0.05);
+          }
+
+          const isLabeled=!!(b.isMenu||b.isSub);
+          const rR=isLabeled?LABEL_REPEL_R:REPEL_R;
+          const rS=isLabeled?LABEL_REPEL_STR:REPEL_STR;
+
+          // --- 核心修改：模拟子球体弹出时的路径排斥效果 ---
+          let targetX = mouse.x;
+          let targetY = mouse.y;
+          
+          // 如果子球正在移动到目标点，且未被用户点击，则背景球也会被这些子球排斥
+          if(!isLabeled) {
+            for(const sub of balls) {
+                if(sub.isSub && !sub.dying && sub.opacity < 0.9) {
+                    const dSub = dist(sub.x, sub.y, b.x, b.y);
+                    if(dSub < REPEL_R * 0.8) {
+                        const fSub = (REPEL_STR * 0.5) / (dSub * dSub);
+                        b.vx -= ((sub.x - b.x) / dSub) * fSub;
+                        b.vy -= ((sub.y - b.y) / dSub) * fSub;
+                    }
+                }
+            }
+          }
+
+          const dx=targetX-b.x, dy=targetY-b.y;
+          const d=Math.sqrt(dx*dx+dy*dy)||1;
+          if(d<rR){
+            const f=rS/(d*d);
+            b.vx-=(dx/d)*f; b.vy-=(dy/d)*f;
+          }
+          b.vx+=(b.bx-b.x)*SPRING;
+          b.vy+=(b.by-b.y)*SPRING;
+          b.vx*=DAMP; b.vy*=DAMP;
+          b.x+=b.vx;  b.y+=b.vy;
+        }
+        for(let i=frags.length-1;i>=0;i--){
+          const p=frags[i];
+          p.vx*=0.92; p.vy=p.vy*0.92+0.18;
+          p.x+=p.vx;  p.y+=p.vy;
+          p.life-=p.decay;
+          if(p.life<=0) frags.splice(i,1);
+        }
+      }
+
+      function draw(now:number){
+        ctx.fillStyle = '#050505'; // 重新涂黑背景
+        ctx.fillRect(0,0,W,H);
+        
+        for(const b of balls){
+          if(b.opacity<=0.01) continue;
+          ctx.globalAlpha=b.opacity;
+
+          // 一开始就有的炫光效果（ShadowBlur）
+          ctx.save();
+          if(b.glowColor) {
+              ctx.shadowBlur = 15;
+              ctx.shadowColor = b.glowColor;
+          }
+
+          // MENU 脉冲光环 (保留简单的发光波纹)
+          if(b.isMenu&&!b.dying){
+            const ph=(now/1800)%1;
+            const rr=b.r + ph*20;
+            const al=(1-ph)*0.4;
+            ctx.beginPath(); ctx.arc(b.x,b.y,rr,0,Math.PI*2);
+            ctx.strokeStyle=`rgba(255,69,0,${al})`;
+            ctx.lineWidth=1.5; ctx.stroke();
+          }
+
+          ctx.beginPath();
+          ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+          ctx.fillStyle=b.fill; ctx.fill();
+          ctx.strokeStyle=b.stroke; ctx.lineWidth=b.lw; ctx.stroke();
+          ctx.restore(); // 结束发光渲染
+
+          if(b.label&&b.r>8){
+            ctx.fillStyle=b.labelColor??'#fff';
+            ctx.font=`bold ${b.labelFontSize??labelFS(b.r,b.label)}px ${FONT}`;
+            ctx.textAlign='center'; ctx.textBaseline='middle';
+            ctx.fillText(b.label,b.x,b.y);
+          }
+          ctx.globalAlpha=1;
+        }
+
+        for(const p of frags){
+          ctx.globalAlpha=p.life;
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2);
+          ctx.fillStyle=p.color; ctx.fill();
+          ctx.globalAlpha=1;
+        }
+      }
+
+      function loop(now=0){
+        update();
+        draw(now);
+        requestAnimationFrame(loop);
+      }
+
+      canvas.addEventListener('mousemove',e=>{
+        mouse.x=e.clientX; mouse.y=e.clientY;
+        let ptr=false;
+        if(menuIdx>=0&&menuIdx<balls.length){
+          const mb=balls[menuIdx];
+          if(mb.isMenu&&dist(e.clientX,e.clientY,mb.x,mb.y)<=mb.r*1.15) ptr=true;
+        }
+        if(navState==='open'){
+          for(const sb of balls.filter(b=>b.isSub)){
+            if(sb.opacity>0.4&&dist(e.clientX,e.clientY,sb.x,sb.y)<=sb.r){ptr=true;break;}
+          }
+        }
+        canvas.style.cursor=ptr?'pointer':'default';
+      });
+      canvas.addEventListener('mouseleave',()=>{mouse.x=-9999;mouse.y=-9999;});
+
+      canvas.addEventListener('click',e=>{
+        const cx=e.clientX,cy=e.clientY;
+        if(navState==='idle'&&menuIdx>=0&&menuIdx<balls.length){
+          const mb=balls[menuIdx];
+          if(mb.isMenu&&dist(cx,cy,mb.x,mb.y)<=mb.r*1.15){
+            shatter(mb.x,mb.y,mb.r);
+            balls.splice(menuIdx,1); menuIdx=-1;
+            setTimeout(()=>spawnSubs(cx,cy),130);
+            return;
+          }
+        }
+        if(navState==='open'){
+          for(const sb of balls.filter(b=>b.isSub)){
+            if(sb.opacity>0.5&&dist(cx,cy,sb.x,sb.y)<=sb.r){
+              if(sb.isX) closeSubs();
+              else if(sb.href) window.location.href=sb.href;
+              return;
+            }
+          }
+        }
+      });
+
+      window.addEventListener('resize',()=>{
+        W=canvas.width=window.innerWidth;
+        H=canvas.height=window.innerHeight;
+        generateBalls(); frags=[]; navState='idle';
+      });
+
+      generateBalls();
+      document.fonts.ready.then(()=>requestAnimationFrame(loop));
+    </script>
+  </body>
+</html>
