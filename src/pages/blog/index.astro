@@ -1,116 +1,359 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
 const posts = (await getCollection('blog'))
-	.filter((post) => !post.data.hidden)
-	.sort(
-	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+  .filter((post) => !post.data.hidden)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.date} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+      /* ── RESET ─────────────────────────────────────────── */
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+      html, body {
+        width: 100%; min-height: 100%;
+        background: #000 !important;   /* override global.css gradient */
+        color: #f0f0f0;
+        font-family: 'Space Mono', monospace;
+        overflow-x: hidden;
+      }
+
+      /* ── PERSPECTIVE GRID (exact BYLD params, green) ───── */
+      /* Using explicit divs instead of body::before/after    */
+      /* to avoid being hidden by body background stacking.   */
+      .grid-top {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 50%;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(0,255,80,0.25) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,255,80,0.25) 1px, transparent 1px);
+        background-size: 100px 100px;
+        -webkit-transform: perspective(400px) rotateX(-60deg);
+        transform: perspective(400px) rotateX(-60deg);
+        -webkit-transform-origin: center top;
+        transform-origin: center top;
+        will-change: transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+      .grid-bottom {
+        position: fixed;
+        top: 50%; left: 0; right: 0; bottom: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(0,255,80,0.25) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,255,80,0.25) 1px, transparent 1px);
+        background-size: 100px 100px;
+        -webkit-transform: perspective(400px) rotateX(60deg);
+        transform: perspective(400px) rotateX(60deg);
+        -webkit-transform-origin: center bottom;
+        transform-origin: center bottom;
+        will-change: transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+
+      /* ── NOISE (exact BYLD params) ─────────────────────── */
+      .noise::before {
+        position: fixed;
+        top: 0; left: 0;
+        width: 200vw; height: 200vh;
+        content: '';
+        opacity: 0.08;
+        z-index: 1000;
+        pointer-events: none;
+        background: url('/assets/noise.gif');
+      }
+
+      /* ── HAIBARA ───────────────────────────────────────── */
+      .haibara {
+        position: fixed;
+        right: -60px; bottom: 0;
+        width: 42vw; height: auto;
+        opacity: 0.30;
+        z-index: 1;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* ── MENU ──────────────────────────────────────────── */
+      .menu {
+        position: fixed;
+        top: 3vw; left: 2.5vw;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+      }
+      .menu-link {
+        display: inline-block;
+        color: rgba(200, 230, 200, 0.85);
+        text-decoration: none;
+        font-size: 0.9vw;
+        font-family: 'Space Mono', monospace;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+      .menu-link.active {
+        color: rgba(255,69,0,0.90);
+      }
+      .menu-link .letter {
+        display: inline-block;
+        transition: color 0.05s;
+      }
+      /* active 下划线 */
+      .menu-link.active::after {
+        content: ' ←';
+        color: rgba(255,69,0,0.90);
+        font-size: 0.8em;
+      }
+
+      /* ── MAIN LAYOUT ───────────────────────────────────── */
+      main {
+        min-height: 100vh;
+        padding: 3vw 3vw 4vw 12vw;
+        position: relative;
+        z-index: 10;
+      }
+
+      .page-label {
+        font-size: 0.7vw;
+        color: rgba(255,69,0,0.90);
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        margin-bottom: 0.5vw;
+      }
+      .page-title {
+        font-size: 2.2vw;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #fff;
+        margin-bottom: 2.5vw;
+        line-height: 1;
+      }
+
+      /* ── POST GRID ─────────────────────────────────────── */
+      .posts-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2px;
+        max-width: 70vw;
+      }
+
+      /* ── POST CARD ─────────────────────────────────────── */
+      .post-card {
+        display: block;
+        position: relative;
+        text-decoration: none;
+        background: rgba(0, 15, 200, 0.82);
+        padding: 1.4vw 1.2vw 1.2vw 1.2vw;
+        color: #fff;
+        /* load-in initial state */
+        opacity: 0;
+        filter: blur(8px);
+        transition:
+          opacity 0.8s ease,
+          filter 0.8s ease,
+          background 0.2s ease,
+          transform 0.2s ease;
+      }
+      .post-card.loaded {
+        opacity: 1;
+        filter: blur(0);
+      }
+      .post-card:hover {
+        background: rgba(20, 60, 255, 0.94);
+        transform: scale(1.01);
+      }
+
+      /* corner dots */
+      .post-card .c {
+        position: absolute;
+        width: 0.3vw; height: 0.3vw;
+        background: rgba(255,255,255,0.55);
+      }
+      .post-card .c-tl { top: 0; left: 0; }
+      .post-card .c-tr { top: 0; right: 0; }
+      .post-card .c-bl { bottom: 0; left: 0; }
+      .post-card .c-br { bottom: 0; right: 0; }
+
+      .card-tag {
+        font-size: 0.65vw;
+        color: rgba(120, 160, 255, 0.75);
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        margin-bottom: 0.7vw;
+      }
+      .card-title {
+        font-size: 1.15vw;
+        line-height: 1.5vw;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 0.7vw;
+        color: #fff;
+        word-break: break-word;
+      }
+      .card-title::before {
+        content: '/// ';
+        color: rgba(100, 140, 255, 0.65);
+        font-weight: 400;
+      }
+      .card-date {
+        font-size: 0.65vw;
+        color: rgba(180, 200, 255, 0.55);
+        letter-spacing: 0.12em;
+      }
+
+      /* ── RESPONSIVE ────────────────────────────────────── */
+      @media (max-width: 767px) {
+        .menu { top: 18px; left: 14px; gap: 0.8em; }
+        .menu-link { font-size: 13px; }
+        main { padding: 90px 14px 30px 14px; }
+        .page-label { font-size: 10px; }
+        .page-title { font-size: 22px; margin-bottom: 20px; }
+        .posts-grid { grid-template-columns: 1fr; gap: 2px; max-width: 100%; }
+        .post-card { padding: 14px 12px; }
+        .card-tag { font-size: 10px; }
+        .card-title { font-size: 15px; line-height: 20px; }
+        .card-date { font-size: 10px; }
+        .post-card .c { width: 4px; height: 4px; }
+        .haibara { width: 72vw; right: -20px; opacity: 0.22; }
+        .page-title { font-size: 28px; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Perspective grid -->
+    <div class="grid-top"></div>
+    <div class="grid-bottom"></div>
+
+    <!-- Noise overlay -->
+    <div class="noise"></div>
+
+    <!-- Haibara Ai -->
+    <img class="haibara" src="/assets/haibara.png" alt="" aria-hidden="true" />
+
+    <!-- Top-left menu -->
+    <nav class="menu">
+      <a href="/"      class="menu-link"        data-text="Home" >Home</a>
+      <a href="/blog"  class="menu-link active"  data-text="Blog" >Blog</a>
+      <a href="/diary" class="menu-link"         data-text="Diary">Diary</a>
+      <a href="/about" class="menu-link"         data-text="About">About</a>
+    </nav>
+
+    <!-- Content -->
+    <main>
+      <p class="page-label">// Archive</p>
+      <h1 class="page-title">Blog</h1>
+
+      <div class="posts-grid">
+        {posts.map((post) => (
+          <a href={`/blog/${post.id}/`} class="post-card">
+            <span class="c c-tl"></span>
+            <span class="c c-tr"></span>
+            <span class="c c-bl"></span>
+            <span class="c c-br"></span>
+            <p class="card-tag">Entry</p>
+            <p class="card-title">{post.data.title}</p>
+            <p class="card-date"><FormattedDate date={post.data.date} /></p>
+          </a>
+        ))}
+      </div>
+    </main>
+
+    <script>
+      // ── SHUFFLE MENU ANIMATION ────────────────────────────
+      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      const RESOLVE_DURATION = 1500; // total ms to reveal all letters right→left
+      const SHUFFLE_MS = 50;         // ms per random-char swap during scramble
+
+      document.querySelectorAll('.menu-link').forEach(function (link) {
+        const original = (link.getAttribute('data-text') || link.textContent).trim().toUpperCase();
+        const letters  = original.split('');
+        const N        = letters.length;
+
+        // Replace text content with per-letter spans
+        link.innerHTML = letters.map(function (l) {
+          return '<span class="letter">' + l + '</span>';
+        }).join('');
+        const spans = Array.from(link.querySelectorAll('.letter'));
+
+        let shuffleIds  = [];
+        let resolveIds  = [];
+        let animating   = false;
+
+        function startShuffle() {
+          if (animating) return;
+          animating = true;
+
+          // Phase 1: all letters scramble immediately
+          spans.forEach(function (span, i) {
+            shuffleIds[i] = setInterval(function () {
+              span.textContent = CHARS[Math.floor(Math.random() * CHARS.length)];
+            }, SHUFFLE_MS);
+          });
+
+          // Phase 2: resolve right → left spread over RESOLVE_DURATION
+          const step = N > 1 ? RESOLVE_DURATION / (N - 1) : 0;
+          for (var i = 0; i < N; i++) {
+            (function (i) {
+              var resolveIdx = N - 1 - i;      // last letter resolves first
+              var delay      = i * step;
+              var tid = setTimeout(function () {
+                clearInterval(shuffleIds[resolveIdx]);
+                spans[resolveIdx].textContent = letters[resolveIdx];
+              }, delay);
+              resolveIds.push(tid);
+            })(i);
+          }
+        }
+
+        function stopShuffle() {
+          shuffleIds.forEach(function (id) { clearInterval(id); });
+          resolveIds.forEach(function (id) { clearTimeout(id); });
+          shuffleIds = [];
+          resolveIds = [];
+          animating  = false;
+          spans.forEach(function (span, i) { span.textContent = letters[i]; });
+        }
+
+        link.addEventListener('mouseenter', startShuffle);
+        link.addEventListener('mouseleave', stopShuffle);
+      });
+
+      // ── SCROLL-TRIGGERED CARD BLUR-IN ─────────────────────
+      var cards     = Array.from(document.querySelectorAll('.post-card'));
+      var observer  = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var idx = cards.indexOf(entry.target);
+            setTimeout(function () {
+              entry.target.classList.add('loaded');
+            }, (idx % 4) * 120);  // stagger within rows of 4
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.05 });
+
+      cards.forEach(function (card) { observer.observe(card); });
+    </script>
+
+  </body>
 </html>

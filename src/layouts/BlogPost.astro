@@ -2,98 +2,435 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, date, updatedDate, heroImage } = Astro.props;
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description ?? ''} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={title} description={description ?? ''} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+      /* ── RESET ─────────────────────────────────────────── */
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={date} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<script src="https://giscus.app/client.js"
-			data-repo="Morgenro/Morgenro.github.io"
-			data-repo-id="R_kgDOOnQMCg"
-			data-category="Announcements"
-			data-category-id="DIC_kwDOOnQMCs4Cs90C"
-			data-mapping="pathname"
-			data-reactions-enabled="1"
-			data-input-position="bottom"
-			data-theme="light"
-			data-lang="zh-CN"
-			crossorigin="anonymous"
-			async>
-		</script>
-		<Footer />
-	</body>
+      html, body {
+        width: 100%; min-height: 100%;
+        background: #000 !important;
+        color: #f0f0f0;
+        font-family: 'Space Mono', monospace;
+        overflow-x: hidden;
+      }
+
+      /* ── PERSPECTIVE GRID (exact BYLD params, green) ───── */
+      .grid-top {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 50%;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(0,255,80,0.25) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,255,80,0.25) 1px, transparent 1px);
+        background-size: 100px 100px;
+        -webkit-transform: perspective(400px) rotateX(-60deg);
+        transform: perspective(400px) rotateX(-60deg);
+        -webkit-transform-origin: center top;
+        transform-origin: center top;
+        will-change: transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+      .grid-bottom {
+        position: fixed;
+        top: 50%; left: 0; right: 0; bottom: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(0,255,80,0.25) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,255,80,0.25) 1px, transparent 1px);
+        background-size: 100px 100px;
+        -webkit-transform: perspective(400px) rotateX(60deg);
+        transform: perspective(400px) rotateX(60deg);
+        -webkit-transform-origin: center bottom;
+        transform-origin: center bottom;
+        will-change: transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+
+      /* ── NOISE (exact BYLD params) ─────────────────────── */
+      .noise::before {
+        position: fixed;
+        top: 0; left: 0;
+        width: 200vw; height: 200vh;
+        content: '';
+        opacity: 0.08;
+        z-index: 1000;
+        pointer-events: none;
+        background: url('/assets/noise.gif');
+      }
+
+      /* ── HAIBARA ───────────────────────────────────────── */
+      .haibara {
+        position: fixed;
+        right: -60px; bottom: 0;
+        width: 42vw; height: auto;
+        opacity: 0.30;
+        z-index: 1;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* ── MENU ──────────────────────────────────────────── */
+      .menu {
+        position: fixed;
+        top: 3vw; left: 2.5vw;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+      }
+      .menu-link {
+        display: inline-block;
+        color: rgba(200, 230, 200, 0.85);
+        text-decoration: none;
+        font-size: 0.9vw;
+        font-family: 'Space Mono', monospace;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+      .menu-link .letter { display: inline-block; }
+
+      /* ── MAIN LAYOUT ───────────────────────────────────── */
+      main {
+        min-height: 100vh;
+        margin-left: 9vw;
+        padding: 5vw 3vw 6vw 1vw;
+        position: relative;
+        z-index: 10;
+      }
+
+      /* ── ARTICLE WRAPPER ───────────────────────────────── */
+      article {
+        width: 92%;
+        max-width: 1300px;
+        margin: 0 auto;
+      }
+
+      /* ── HERO IMAGE ────────────────────────────────────── */
+      .hero-image {
+        width: 100%;
+        margin-bottom: 2vw;
+      }
+      .hero-image img {
+        display: block;
+        width: 100%;
+        border-radius: 4px;
+        opacity: 0.9;
+      }
+
+      /* ── POST HEADER ───────────────────────────────────── */
+      .post-header {
+        margin-bottom: 2.5vw;
+        padding-bottom: 1.5vw;
+        border-bottom: 1px solid rgba(0,255,80,0.25);
+      }
+      .post-tag {
+        font-size: 0.65vw;
+        color: rgba(0,255,80,0.6);
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        margin-bottom: 0.8vw;
+      }
+      .post-title {
+        font-size: 2vw;
+        font-weight: 700;
+        line-height: 1.2;
+        text-transform: uppercase;
+        color: #fff;
+        margin-bottom: 0.8vw;
+        word-break: break-word;
+      }
+      .post-title::before {
+        content: '/// ';
+        color: rgba(100,140,255,0.65);
+        font-weight: 400;
+      }
+      .post-date {
+        font-size: 0.7vw;
+        color: rgba(180,200,255,0.55);
+        letter-spacing: 0.12em;
+      }
+      .post-updated {
+        font-size: 0.65vw;
+        color: rgba(0,255,80,0.4);
+        letter-spacing: 0.1em;
+        margin-top: 0.3vw;
+        font-style: italic;
+      }
+
+      /* ── RESPONSIVE ────────────────────────────────────── */
+      @media (max-width: 767px) {
+        .menu { top: 18px; left: 14px; gap: 0.8em; }
+        .menu-link { font-size: 13px; }
+        main { margin-left: 0; padding: 75px 16px 40px 16px; }
+        .post-tag { font-size: 10px; }
+        .post-title { font-size: 20px; }
+        .post-date { font-size: 11px; }
+        .haibara { width: 72vw; right: -20px; opacity: 0.18; }
+      }
+    </style>
+
+    <!-- prose 内容样式：is:global 确保穿透 <slot /> 的 markdown 节点 -->
+    <style is:global>
+      /* ── PROSE BASE ─────────────────────────────────────── */
+      .prose {
+        color: rgba(210, 220, 210, 0.88);
+        font-size: 0.95vw;
+        line-height: 1.9;
+        font-family: 'Space Mono', monospace;
+      }
+
+      /* ── HEADINGS ───────────────────────────────────────── */
+      .prose h1,
+      .prose h2,
+      .prose h3,
+      .prose h4,
+      .prose h5,
+      .prose h6 {
+        text-transform: uppercase;
+        margin: 2em 0 0.6em 0;
+        line-height: 1.2;
+        font-family: 'Space Mono', monospace;
+      }
+      .prose h1 { font-size: 1.6vw;  color: #ffffff; }
+      .prose h2 { font-size: 1.35vw; color: #00ff50; }
+      .prose h3 { font-size: 1.1vw;  color: #e8d5ff; }
+      .prose h4 { font-size: 0.95vw; color: #a0c8ff; }
+      .prose h5 { font-size: 0.95vw; color: rgba(220,220,220,0.85); }
+      .prose h6 { font-size: 0.95vw; color: rgba(200,200,200,0.75); }
+
+      /* ── PARAGRAPH / LIST ───────────────────────────────── */
+      .prose p  { margin-bottom: 1.2em; }
+      .prose ul,
+      .prose ol { padding-left: 1.5em; margin-bottom: 1.2em; }
+      .prose li { margin-bottom: 0.4em; }
+
+      /* ── LINKS ──────────────────────────────────────────── */
+      .prose a {
+        color: rgba(0,255,80,0.85);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0,255,80,0.3);
+        transition: color 0.15s, border-color 0.15s;
+      }
+      .prose a:hover { color: #fff; border-bottom-color: #fff; }
+
+      /* ── INLINE EMPHASIS ────────────────────────────────── */
+      .prose strong { color: #ffffff; font-weight: 700; }
+      .prose em     { color: rgba(200,220,255,0.85); }
+
+      /* ── BLOCKQUOTE ─────────────────────────────────────── */
+      .prose blockquote {
+        border-left: 3px solid rgba(0,255,80,0.5);
+        padding-left: 1.2em;
+        margin: 1.5em 0;
+        color: rgba(180,210,180,0.75);
+        font-style: italic;
+      }
+
+      /* ── INLINE CODE (`backtick`) ───────────────────────── */
+      .prose :not(pre) > code {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.85em;
+        background: rgba(0,255,80,0.1) !important;
+        border: 1px solid rgba(0,255,80,0.25) !important;
+        color: rgba(0,255,80,0.95) !important;
+        padding: 0.15em 0.4em !important;
+        border-radius: 2px;
+      }
+
+      /* ── CODE BLOCK (``` fenced ```) ────────────────────── */
+      .prose pre {
+        background: rgba(13, 17, 23, 0.95) !important;
+        border: 1px solid rgba(0,255,80,0.2) !important;
+        border-radius: 4px;
+        padding: 1.2em 1.4em !important;
+        overflow-x: auto;
+        margin: 1.5em 0;
+      }
+      .prose pre code {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        font-size: 0.88vw;
+        color: inherit !important;
+      }
+
+      /* ── IMAGE ──────────────────────────────────────────── */
+      .prose img {
+        max-width: 100%;
+        border-radius: 4px;
+        margin: 1.5em 0;
+        opacity: 0.9;
+      }
+
+      /* ── HR ─────────────────────────────────────────────── */
+      .prose hr {
+        border: none;
+        border-top: 1px solid rgba(0,255,80,0.2);
+        margin: 2em 0;
+      }
+
+      /* ── TABLE ──────────────────────────────────────────── */
+      .prose table { width: 100%; border-collapse: collapse; margin: 1.5em 0; }
+      .prose th {
+        background: rgba(0,255,80,0.1);
+        color: rgba(0,255,80,0.9);
+        padding: 0.5em 0.8em;
+        border: 1px solid rgba(0,255,80,0.2);
+        text-align: left;
+        text-transform: uppercase;
+        font-size: 0.8em;
+        letter-spacing: 0.1em;
+      }
+      .prose td {
+        padding: 0.5em 0.8em;
+        border: 1px solid rgba(0,255,80,0.12);
+        color: rgba(210,220,210,0.85);
+      }
+      .prose tr:nth-child(even) td { background: rgba(0,255,80,0.03); }
+
+      /* ── MOBILE ─────────────────────────────────────────── */
+      @media (max-width: 767px) {
+        .prose { font-size: 14px; }
+        .prose h1 { font-size: 20px; }
+        .prose h2 { font-size: 17px; }
+        .prose h3 { font-size: 15px; }
+        .prose h4, .prose h5, .prose h6 { font-size: 14px; }
+        .prose pre code { font-size: 12px; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Perspective grid -->
+    <div class="grid-top"></div>
+    <div class="grid-bottom"></div>
+
+    <!-- Noise overlay -->
+    <div class="noise"></div>
+
+    <!-- Haibara Ai -->
+    <img class="haibara" src="/assets/haibara.png" alt="" aria-hidden="true" />
+
+    <!-- Top-left menu -->
+    <nav class="menu">
+      <a href="/"      class="menu-link" data-text="Home" >Home</a>
+      <a href="/blog"  class="menu-link" data-text="Blog" >Blog</a>
+      <a href="/diary" class="menu-link" data-text="Diary">Diary</a>
+      <a href="/about" class="menu-link" data-text="About">About</a>
+    </nav>
+
+    <!-- Article -->
+    <main>
+      <article>
+
+        {heroImage && (
+          <div class="hero-image">
+            <Image width={1020} height={510} src={heroImage} alt="" />
+          </div>
+        )}
+
+        <div class="post-header">
+          <p class="post-tag">// Blog Entry</p>
+          <h1 class="post-title">{title}</h1>
+          <p class="post-date"><FormattedDate date={date} /></p>
+          {updatedDate && (
+            <p class="post-updated">Updated: <FormattedDate date={updatedDate} /></p>
+          )}
+        </div>
+
+        <div class="prose">
+          <slot />
+        </div>
+
+      </article>
+
+      <div class="giscus-wrap">
+        <script src="https://giscus.app/client.js"
+          data-repo="Morgenro/Morgenro.github.io"
+          data-repo-id="R_kgDOOnQMCg"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOOnQMCs4Cs90C"
+          data-mapping="pathname"
+          data-reactions-enabled="1"
+          data-input-position="bottom"
+          data-theme="dark"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+        </script>
+      </div>
+    </main>
+
+    <script>
+      // ── SHUFFLE MENU ANIMATION ────────────────────────────
+      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      const RESOLVE_DURATION = 1500;
+      const SHUFFLE_MS = 50;
+
+      document.querySelectorAll('.menu-link').forEach(function (link) {
+        const original = (link.getAttribute('data-text') || link.textContent).trim().toUpperCase();
+        const letters  = original.split('');
+        const N        = letters.length;
+
+        link.innerHTML = letters.map(function (l) {
+          return '<span class="letter">' + l + '</span>';
+        }).join('');
+        const spans = Array.from(link.querySelectorAll('.letter'));
+
+        let shuffleIds  = [];
+        let resolveIds  = [];
+        let animating   = false;
+
+        function startShuffle() {
+          if (animating) return;
+          animating = true;
+          spans.forEach(function (span, i) {
+            shuffleIds[i] = setInterval(function () {
+              span.textContent = CHARS[Math.floor(Math.random() * CHARS.length)];
+            }, SHUFFLE_MS);
+          });
+          const step = N > 1 ? RESOLVE_DURATION / (N - 1) : 0;
+          for (var i = 0; i < N; i++) {
+            (function (i) {
+              var resolveIdx = N - 1 - i;
+              var tid = setTimeout(function () {
+                clearInterval(shuffleIds[resolveIdx]);
+                spans[resolveIdx].textContent = letters[resolveIdx];
+              }, i * step);
+              resolveIds.push(tid);
+            })(i);
+          }
+        }
+
+        function stopShuffle() {
+          shuffleIds.forEach(function (id) { clearInterval(id); });
+          resolveIds.forEach(function (id) { clearTimeout(id); });
+          shuffleIds = []; resolveIds = []; animating = false;
+          spans.forEach(function (span, i) { span.textContent = letters[i]; });
+        }
+
+        link.addEventListener('mouseenter', startShuffle);
+        link.addEventListener('mouseleave', stopShuffle);
+      });
+    </script>
+  </body>
 </html>

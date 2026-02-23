@@ -1,19 +1,228 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
 ---
 
 <!doctype html>
 <html lang="zh-CN">
   <head>
     <BaseHead title="About" description="" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+      /* ── RESET ─────────────────────────────────────────── */
+      *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+      html, body {
+        width: 100%; min-height: 100%;
+        background: #000 !important;
+        color: #f0f0f0;
+        font-family: 'Space Mono', monospace;
+        overflow-x: hidden;
+      }
+
+      /* ── PERSPECTIVE GRID ───────────────────────────────── */
+      .grid-top {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 50%;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(0,255,80,0.25) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,255,80,0.25) 1px, transparent 1px);
+        background-size: 100px 100px;
+        -webkit-transform: perspective(400px) rotateX(-60deg);
+        transform: perspective(400px) rotateX(-60deg);
+        -webkit-transform-origin: center top;
+        transform-origin: center top;
+        will-change: transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+      .grid-bottom {
+        position: fixed;
+        top: 50%; left: 0; right: 0; bottom: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(0,255,80,0.25) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,255,80,0.25) 1px, transparent 1px);
+        background-size: 100px 100px;
+        -webkit-transform: perspective(400px) rotateX(60deg);
+        transform: perspective(400px) rotateX(60deg);
+        -webkit-transform-origin: center bottom;
+        transform-origin: center bottom;
+        will-change: transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+
+      /* ── NOISE ──────────────────────────────────────────── */
+      .noise::before {
+        position: fixed;
+        top: 0; left: 0;
+        width: 200vw; height: 200vh;
+        content: '';
+        opacity: 0.08;
+        z-index: 1000;
+        pointer-events: none;
+        background: url('/assets/noise.gif');
+      }
+
+      /* ── HAIBARA ────────────────────────────────────────── */
+      .haibara {
+        position: fixed;
+        right: -60px; bottom: 0;
+        width: 42vw; height: auto;
+        opacity: 0.30;
+        z-index: 1;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* ── MENU ───────────────────────────────────────────── */
+      .menu {
+        position: fixed;
+        top: 3vw; left: 2.5vw;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+      }
+      .menu-link {
+        display: inline-block;
+        color: rgba(200, 230, 200, 0.85);
+        text-decoration: none;
+        font-size: 0.9vw;
+        font-family: 'Space Mono', monospace;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+      .menu-link.active {
+        color: rgba(255,69,0,0.90);
+      }
+      .menu-link.active::after {
+        content: ' ←';
+        color: rgba(255,69,0,0.90);
+        font-size: 0.8em;
+      }
+      .menu-link .letter { display: inline-block; }
+
+      /* ── MAIN LAYOUT ────────────────────────────────────── */
+      main {
+        min-height: 100vh;
+        margin-left: 9vw;
+        padding: 5vw 3vw 6vw 2vw;
+        position: relative;
+        z-index: 10;
+      }
+
+      .page-label {
+        font-size: 0.7vw;
+        color: rgba(255,69,0,0.90);
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        margin-bottom: 0.5vw;
+      }
+      .page-title {
+        font-size: 2.2vw;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #fff;
+        margin-bottom: 2.5vw;
+        line-height: 1;
+      }
+
+      /* ── RESPONSIVE ─────────────────────────────────────── */
+      @media (max-width: 767px) {
+        .menu { top: 18px; left: 14px; gap: 0.8em; }
+        .menu-link { font-size: 13px; }
+        main { margin-left: 0; padding: 80px 14px 40px 14px; }
+        .page-label { font-size: 10px; }
+        .page-title { font-size: 22px; margin-bottom: 20px; }
+        .haibara { width: 72vw; right: -20px; opacity: 0.18; }
+      }
+    </style>
   </head>
   <body>
-    <Header />
-    <main style="width:720px;max-width:calc(100% - 2em);margin:2em auto;padding:0 1em;">
-      <h1>About</h1>
+
+    <!-- Perspective grid -->
+    <div class="grid-top"></div>
+    <div class="grid-bottom"></div>
+
+    <!-- Noise overlay -->
+    <div class="noise"></div>
+
+    <!-- Haibara Ai -->
+    <img class="haibara" src="/assets/haibara.png" alt="" aria-hidden="true" />
+
+    <!-- Top-left menu -->
+    <nav class="menu">
+      <a href="/"      class="menu-link"        data-text="Home" >Home</a>
+      <a href="/blog"  class="menu-link"         data-text="Blog" >Blog</a>
+      <a href="/diary" class="menu-link"         data-text="Diary">Diary</a>
+      <a href="/about" class="menu-link active"  data-text="About">About</a>
+    </nav>
+
+    <main>
+      <p class="page-label">// Profile</p>
+      <h1 class="page-title">About</h1>
     </main>
-    <Footer />
+
+    <script>
+      // ── SHUFFLE MENU ANIMATION ────────────────────────────
+      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      const RESOLVE_DURATION = 1500;
+      const SHUFFLE_MS = 50;
+
+      document.querySelectorAll('.menu-link').forEach(function (link) {
+        const original = (link.getAttribute('data-text') || link.textContent).trim().toUpperCase();
+        const letters  = original.split('');
+        const N        = letters.length;
+
+        link.innerHTML = letters.map(function (l) {
+          return '<span class="letter">' + l + '</span>';
+        }).join('');
+        const spans = Array.from(link.querySelectorAll('.letter'));
+
+        let shuffleIds  = [];
+        let resolveIds  = [];
+        let animating   = false;
+
+        function startShuffle() {
+          if (animating) return;
+          animating = true;
+          spans.forEach(function (span, i) {
+            shuffleIds[i] = setInterval(function () {
+              span.textContent = CHARS[Math.floor(Math.random() * CHARS.length)];
+            }, SHUFFLE_MS);
+          });
+          const step = N > 1 ? RESOLVE_DURATION / (N - 1) : 0;
+          for (var i = 0; i < N; i++) {
+            (function (i) {
+              var resolveIdx = N - 1 - i;
+              var tid = setTimeout(function () {
+                clearInterval(shuffleIds[resolveIdx]);
+                spans[resolveIdx].textContent = letters[resolveIdx];
+              }, i * step);
+              resolveIds.push(tid);
+            })(i);
+          }
+        }
+
+        function stopShuffle() {
+          shuffleIds.forEach(function (id) { clearInterval(id); });
+          resolveIds.forEach(function (id) { clearTimeout(id); });
+          shuffleIds = []; resolveIds = []; animating = false;
+          spans.forEach(function (span, i) { span.textContent = letters[i]; });
+        }
+
+        link.addEventListener('mouseenter', startShuffle);
+        link.addEventListener('mouseleave', stopShuffle);
+      });
+    </script>
   </body>
 </html>
