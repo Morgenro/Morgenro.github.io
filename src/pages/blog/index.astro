@@ -125,6 +125,9 @@ const posts = (await getCollection('blog'))
 
       /* ── MAIN LAYOUT ───────────────────────────────────── */
       main {
+        width: auto;
+        max-width: none;
+        margin: 0;
         min-height: 100vh;
         padding: 3vw 3vw 4vw 12vw;
         position: relative;
@@ -153,7 +156,7 @@ const posts = (await getCollection('blog'))
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 2px;
-        max-width: 70vw;
+        max-width: 82vw;
       }
 
       /* ── POST CARD ─────────────────────────────────────── */

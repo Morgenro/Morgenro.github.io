@@ -110,6 +110,8 @@ const { title, description, date, updatedDate, heroImage } = Astro.props;
 
       /* ── MAIN LAYOUT ───────────────────────────────────── */
       main {
+        width: auto;
+        max-width: none;
         min-height: 100vh;
         margin-left: 9vw;
         padding: 5vw 3vw 6vw 1vw;
@@ -120,8 +122,8 @@ const { title, description, date, updatedDate, heroImage } = Astro.props;
       /* ── ARTICLE WRAPPER ───────────────────────────────── */
       article {
         width: 92%;
-        max-width: 1300px;
-        margin: 0 auto;
+        max-width: 1600px;
+        margin: 0;
       }
 
       /* ── HERO IMAGE ────────────────────────────────────── */
